@@ -1,1 +1,152 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T17:43:37+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Site Title</title><subtitle>An amazing website.</subtitle><author><name>Your Name</name></author><entry><title type="html">My first post</title><link href="http://localhost:4000/post1/" rel="alternate" type="text/html" title="My first post" /><published>2016-11-11T00:00:00+01:00</published><updated>2016-11-11T00:00:00+01:00</updated><id>http://localhost:4000/post1</id><content type="html" xml:base="http://localhost:4000/post1/">&lt;p&gt;my first post looks just fine&lt;/p&gt;</content><author><name>Your Name</name></author><summary type="html">my first post looks just fine</summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T19:43:32+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Finite Simulations</title><subtitle>An amazing website.</subtitle><author><name>Vikram Singh</name></author><entry><title type="html">Setting up the blog</title><link href="http://localhost:4000/blog_setup/" rel="alternate" type="text/html" title="Setting up the blog" /><published>2020-07-24T00:00:00+02:00</published><updated>2020-07-24T00:00:00+02:00</updated><id>http://localhost:4000/blog_setup</id><content type="html" xml:base="http://localhost:4000/blog_setup/">&lt;p&gt;Hello world!!&lt;/p&gt;
+
+&lt;p&gt;I thought I will start of by posting on how I setup this blog.
+First I decided to use 
+&lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt;
+since I already had a Github account and it sounded simple to set it up.
+Not simple at all as it turned out.
+While there are many posts around with headlines like
+setup your blog in 5 minutes, the reality is that 
+it takes 5 minutes if you want to setup an exact replica of a pre-existing template.
+Figure out how to do even the most simple customizations can take quite some time.
+Let us begin then.&lt;/p&gt;
+
+&lt;h2 id=&quot;first-steps&quot;&gt;First steps&lt;/h2&gt;
+
+&lt;p&gt;I decided to use Jekyll since that is what Github recommends.
+Now, Jekyll requires Ruby which is easy for me since Mac already includes it.
+If you don’t, please install it for your platform. 
+Next, create a directory where you will keep the website files and 
+in the terminal do the following inside this directory.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install bundler jekyll
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, we could use the steps listed at various steps such as
+&lt;a href=&quot;https://www.freecodecamp.org/news/create-a-free-static-site-with-github-pages-in-10-minutes/&quot;&gt;here&lt;/a&gt;
+to use the default theme.
+But I decided to use the 
+&lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes&quot;&gt;Minimal Mistakes&lt;/a&gt;
+theme which looked better.
+Download the repository to your folder and then inside the folder do&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And you are done! You can view your website by doing&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle exec jekyll serve  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and then putting the following in your browser.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;http://localhost:4000/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That took 5 minutes. So what’s the problem.
+Well, quite a few of them. But first, the easy part.
+Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; to change things such as the name of the website,
+your social media links etc. 
+Every time, you make a change, you can do the above steps to open it in the browser
+and check the results.
+Its exactly like compiling and running!&lt;/p&gt;
+
+&lt;h2 id=&quot;customize&quot;&gt;Customize&lt;/h2&gt;
+
+&lt;p&gt;The very first thing I wanted to do was figure out how to add
+a page for blog posts.
+To do this add a folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_pages&lt;/code&gt; in the home directory
+and inside this directory add a file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;blog.md&lt;/code&gt;.
+Write the following inside this file&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+title:  &quot;Blog&quot;
+layout: archive
+permalink: /Blog/
+author_profile: true
+---
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next edit the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_data/navigation.yml&lt;/code&gt; to look like this.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;main:
+  - title: &quot;Blog&quot;
+    url: /Blog/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This completes the setup. To write posts, create a new folder
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; and add blog posts there. The file must be named like this.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yyyy-mm-dd-name.md
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The top of the file must have&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: single
+title:  &quot;Name&quot;
+date:   yyyy-mm-dd
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and then start writing your post below. Note that if you name the files with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.md&lt;/code&gt; 
+extension, you are basically telling Jekyll that you are using 
+&lt;a href=&quot;https://guides.github.com/features/mastering-markdown/&quot;&gt;Markdown&lt;/a&gt;.
+So we are done with setting up blogging.
+There’s a slight hitch though, although this is just a personal choice.
+With this setup Jekyll puts the posts on your home page. 
+I did not want this.
+So I deleted the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.html&lt;/code&gt; page in the home directory
+and added an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.md&lt;/code&gt; file with the following lines.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+title: 'About me'
+layout: single
+author_profile: true
+---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;One more customization I decided to do was to add a newsletter sign-up form.
+To do this, I signed up at 
+&lt;a href=&quot;https://mailchimp.com/&quot;&gt;Mailchimp&lt;/a&gt;
+and created an embedded signup form. 
+Mailchimp gave me the HTML for the form which I copy-pasted into a new file
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_data/signup.html&lt;/code&gt;.
+I also added the following line into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_layouts/single.html&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{# if page.signup == true #}{# include signup.html #}{# endif #}.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;#&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;%&lt;/code&gt; in the above. Jekyll thinks I am trying to execute
+this from inside the blog post.
+I modified the defaults in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; to add the signup line.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;defaults:
+  - scope:
+      path: &quot;&quot;
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      related: true
+      signup: true
+      signup: true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_pages/blog.md&lt;/code&gt; I added the following in the header.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;signup: true
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Phew!!
+And now we need to do the easiest part. 
+Put it all online. 
+Go to your GitHub account, and setup a new repository
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username.github.io&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So that is how I setup my blog. 
+Of course I continue to change things here and there. 
+If you are interested, have a look at the files on GitHub.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>Vikram Singh</name></author><summary type="html">Hello world!!</summary></entry></feed>
