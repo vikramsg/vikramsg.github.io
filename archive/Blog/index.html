@@ -9,18 +9,18 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>About me - Finite Simulations</title>
+<!-- begin _includes/seo.html --><title>Blog - Site Title</title>
 <meta name="description" content="An amazing website.">
 
 
-  <meta name="author" content="Vikram Singh">
+  <meta name="author" content="Your Name">
 
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="Finite Simulations">
-<meta property="og:title" content="About me">
-<meta property="og:url" content="/">
+<meta property="og:site_name" content="Site Title">
+<meta property="og:title" content="Blog">
+<meta property="og:url" content="http://localhost:4000/Blog/">
 
 
   <meta property="og:description" content="An amazing website.">
@@ -40,7 +40,7 @@
   
 
 
-<link rel="canonical" href="/">
+<link rel="canonical" href="http://localhost:4000/Blog/">
 
 
 
@@ -50,8 +50,8 @@
     "@context": "https://schema.org",
     
       "@type": "Person",
-      "name": "Vikram Singh",
-      "url": "/"
+      "name": "Your Name",
+      "url": "http://localhost:4000/"
     
   }
 </script>
@@ -64,7 +64,7 @@
 <!-- end _includes/seo.html -->
 
 
-<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Finite Simulations Feed">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Site Title Feed">
 
 <!-- https://t.co/dKP3o1e -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,7 +102,7 @@
 
   </head>
 
-  <body class="layout--single">
+  <body class="layout--archive">
     <nav class="skip-links">
   <h2 class="screen-reader-text">Skip links</h2>
   <ul>
@@ -124,13 +124,13 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          Finite Simulations
+          Site Title
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
               <a href="/Blog/">Blog</a>
             </li><li class="masthead__menu-item">
-              <a href="https://www.researchgate.net/profile/Vikram_Singh40">ResearchGate</a>
+              <a href="https://google.com">External Link</a>
             </li></ul>
         
         <button class="greedy-nav__toggle hidden" type="button">
@@ -158,17 +158,16 @@
 <div itemscope itemtype="https://schema.org/Person">
 
   
-    <div class="author__avatar">
-      
-        <img src="/assets/images/profile.jpg" alt="Vikram Singh" itemprop="image">
-      
-    </div>
-  
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">Vikram Singh</h3>
+      <h3 class="author__name" itemprop="name">Your Name</h3>
     
+    
+      <div class="author__bio" itemprop="description">
+        <p>I am an <strong>amazing</strong> person.</p>
+
+      </div>
     
   </div>
 
@@ -177,22 +176,24 @@
     <ul class="author__urls social-icons">
       
         <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Hamburg, Germany</span>
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Somewhere</span>
         </li>
       
 
       
         
           
-            <li><a href="https://github.com/vikramsg" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+        
           
         
           
-            <li><a href="https://www.linkedin.com/in/vikram-singh-phd/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">Linkedin</span></a></li>
+            <li><a href="https://twitter.com/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
           
         
           
-            <li><a href="https://twitter.com/WhinerVikram" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i><span class="label">Twitter</span></a></li>
+        
+          
+        
           
         
       
@@ -261,70 +262,51 @@
 
 
 
-  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="About me">
+  <div class="archive">
+    
+      <h1 id="page-title" class="page__title">Blog</h1>
     
     
+<section id="2016" class="taxonomy__section">
+    <h2 class="archive__subtitle">2016</h2>
+    <div class="entries-list">
+      
+        
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
     
-
-    <div class="page__inner-wrap">
+    <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">About me
-</h1>
-          
-        </header>
+        <a href="/post1/" rel="permalink">My first post
+</a>
       
-
-      <section class="page__content" itemprop="text">
-        
-        <p>I am a PostDoc at the Max Planck Institute for Meteorology.
-I work at the boundary between mathematics and code development. 
-Developing code to solve real world problems require pushing the boundaries of both which is my goal. 
-I have increasingly become interested in the mathematics of keeping physics models stable as well as the techniques required to make them efficient.</p>
-
-<p>I am also interested in how machine learning can be used to improve physics modelling for fluids. 
-We already use many different models which need to be tuned. 
-Machine learning in theory should be able to make that easier.</p>
-
-<p>At MPIM, I work on the ocean model ICON-O. 
-Keeping climate models stable is a complex problem and requires careful analysis of the numerical method. 
-I have been working on improving the structure preserving numerics of ICON-O to push the model towards more accuracy and stability.</p>
-
-<p>I did my PhD at Technion, Israel.
-I worked on the Discontinuous Galerkin (DG) method, an arbitrary high-order, unstructured method for the solving the compressible Navier Stokes (CNS) equation. 
-High order methods sufferer from aliasing instabilities which leads to robustness issues. 
-I showed that we can solve this issue if we used split forms. 
-In addition, split forms work well with wall modeling to enable high Reynolds’ number flows.
-I wrote the solver in C++ making extensive use of the <a href="https://github.com/mfem/mfem">MFEM</a> library.</p>
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
 
 
-        
-      </section>
-
-      
-
-      <footer class="page__meta">
-        
-        
 
 
-        
+  less than 1 minute read
 
-      </footer>
-
-      
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">my first post looks just fine
+</p>
+  </article>
+</div>
 
       
     </div>
+    <a href="#page-title" class="back-to-top">Back to top &uarr;</a>
+  </section>
 
-    
-  </article>
 
-  
-  
+  </div>
 </div>
-
     </div>
 
     
@@ -360,7 +342,7 @@ I wrote the solver in C++ making extensive use of the <a href="https://github.co
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 Vikram Singh. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2020 Your Name. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

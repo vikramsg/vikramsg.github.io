@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-07-24T19:48:35+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Finite Simulations</title><subtitle>An amazing website.</subtitle><author><name>Vikram Singh</name></author><entry><title type="html">Setting up the blog</title><link href="http://localhost:4000/blog_setup/" rel="alternate" type="text/html" title="Setting up the blog" /><published>2020-07-24T00:00:00+02:00</published><updated>2020-07-24T00:00:00+02:00</updated><id>http://localhost:4000/blog_setup</id><content type="html" xml:base="http://localhost:4000/blog_setup/">&lt;p&gt;Hello world!!&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-06T17:04:06+01:00</updated><id>/feed.xml</id><title type="html">Finite Simulations</title><subtitle>An amazing website.</subtitle><author><name>Vikram Singh</name></author><entry><title type="html">Setting up the blog</title><link href="/blog_setup/" rel="alternate" type="text/html" title="Setting up the blog" /><published>2021-02-01T00:00:00+01:00</published><updated>2021-02-01T00:00:00+01:00</updated><id>/blog_setup</id><content type="html" xml:base="/blog_setup/">&lt;p&gt;Hello world!!&lt;/p&gt;
 
 &lt;p&gt;I thought I will start of by posting on how I setup this blog.
 First I decided to use 
@@ -14,8 +14,9 @@ Let us begin then.&lt;/p&gt;
 &lt;h2 id=&quot;first-steps&quot;&gt;First steps&lt;/h2&gt;
 
 &lt;p&gt;I decided to use Jekyll since that is what Github recommends.
-Now, Jekyll requires Ruby which is easy for me since Mac already includes it.
-If you don’t, please install it for your platform. 
+Now, Jekyll requires Ruby. A version of Ruby is already available on Mac. 
+However, I had some issues, so I used Homebrew to install Ruby.
+If you don’t have Ruby, please install it for your platform. 
 Next, create a directory where you will keep the website files and 
 in the terminal do the following inside this directory.&lt;/p&gt;
 
@@ -101,7 +102,7 @@ So I deleted the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;
 and added an &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;index.md&lt;/code&gt; file with the following lines.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
-title: 'About me'
+title: &apos;About me&apos;
 layout: single
 author_profile: true
 ---
@@ -142,11 +143,19 @@ I modified the defaults in &lt;code class=&quot;language-plaintext highlighter-r
 &lt;p&gt;Phew!!
 And now we need to do the easiest part. 
 Put it all online. 
-Go to your GitHub account, and setup a new repository
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username.github.io&lt;/code&gt;.&lt;/p&gt;
+Go to your GitHub account, and setup a new repository &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;username.github.io&lt;/code&gt;.
+From the terminal do&lt;/p&gt;
 
-&lt;p&gt;So that is how I setup my blog. 
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git init
+git remote add origin git@github.com:&amp;lt;your_github_username&amp;gt;/&amp;lt;your_github_repo_name&amp;gt;.git
+git add *
+git commit -m &quot;Setting up Jekyll&quot;
+git push -u origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And we are done.
+So that is how I setup my blog. 
 Of course I continue to change things here and there. 
-If you are interested, have a look at the files on GitHub.&lt;/p&gt;
+If you are interested, have a look at the files on my GitHub.&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>Vikram Singh</name></author><summary type="html">Hello world!!</summary></entry><entry><title type="html">Dummy</title><link href="http://localhost:4000/dummy/" rel="alternate" type="text/html" title="Dummy" /><published>2020-07-20T00:00:00+02:00</published><updated>2020-07-20T00:00:00+02:00</updated><id>http://localhost:4000/dummy</id><content type="html" xml:base="http://localhost:4000/dummy/">&lt;p&gt;Hello world!!&lt;/p&gt;</content><author><name>Vikram Singh</name></author><summary type="html">Hello world!!</summary></entry></feed>
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;</content><author><name>Vikram Singh</name></author><summary type="html">Hello world!!</summary></entry></feed>
