@@ -19,7 +19,7 @@ I have been working on improving the structure preserving numerics of ICON-O to 
 
 I did my PhD at Technion, Israel.
 I worked on the Discontinuous Galerkin (DG) method, an arbitrary high-order, unstructured method for the solving the compressible Navier Stokes (CNS) equation. 
-High order methods sufferer from aliasing instabilities which leads to robustness issues. 
+High order methods suffer from aliasing instabilities which leads to robustness issues. 
 I showed that we can solve this issue if we used split forms. 
 In addition, split forms work well with wall modeling to enable high Reynolds' number flows.
 I wrote the solver in C++ making extensive use of the [MFEM](https://github.com/mfem/mfem) library.
