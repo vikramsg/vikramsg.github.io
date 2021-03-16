@@ -1,5 +1,5 @@
 main:
   - title: "Blog"
     url: /Blog/
-  - title: "ResearchGate"
-    url: https://www.researchgate.net/profile/Vikram_Singh40 
+  - title: "Curriculum Vitae"
+    url: /CV/ 

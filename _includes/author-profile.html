@@ -246,6 +246,14 @@
         </li>
       {% endif %}
 
+      {% if author.researchgate %}
+        <li>
+          <a href="https://www.researchgate.net/profile/{{ author.researchgate }}" itemprop="sameAs" rel="nofollow noopener noreferrer">
+            <i class="fab fa-fw fa-researchgate" aria-hidden="true"></i><span class="label">{{ site.data.ui-text[site.locale].email_label | default: "Email" }}</span>
+          </a>
+        </li>
+      {% endif %}
+
       {% include author-profile-custom-links.html %}
     </ul>
   </div>

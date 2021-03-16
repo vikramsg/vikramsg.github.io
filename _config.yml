@@ -97,7 +97,7 @@ author:
   avatar           : "/assets/images/profile.jpg"
   bio              : # "I am an **amazing** person."
   location         : "Hamburg, Germany"
-  email            :
+  email            : vikram.singh@mpimet.mpg.de
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
@@ -105,6 +105,9 @@ author:
     - label: "Linkedin"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/vikram-singh-phd/"
+    - label: "ResearchGate"
+      icon: "fab fa-fw fa-researchgate"
+      url: "https://www.researchgate.net/profile/Vikram-Singh-60"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/WhinerVikram"
