@@ -10,10 +10,4 @@ var store = [{
         "tags": [],
         "url": "/blog_paper_wall_model/",
         "teaser": "/assets/images/back.png"
-      },{
-        "title": "Are wall models stable?",
-        "excerpt":"The second paper from my PhD got published recently in Computers and Fluids. If you don’t have access, there’s a free version on ResearchGate and the preprint on Arxiv. The idea of the paper was to look at wall models from an angle that is not usually looked at. Wall...","categories": [],
-        "tags": [],
-        "url": "/blog_paper_wall_model/",
-        "teaser": "/assets/images/back.png"
       }]
