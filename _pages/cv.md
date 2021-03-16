@@ -26,7 +26,7 @@ At ADA, I worked on concept design for a new aircraft project. I used Genetic Al
 PhD in Mechanical Engineering<br/>
 *Oct 2015 – Jul 2019*
 
-I worked on the Discontinuous Galerkin (DG) method, an arbitrary high-order, unstructured method for the solving the compressible Navier Stokes (CNS) equation. High order methods sufferer from aliasing instabilities which leads to robustness issues. I showed that we can solve this issue if we used split forms. In addition, split forms work well with wall modeling to enable high Reynolds' number flows.  
+I worked on the Discontinuous Galerkin (DG) method, an arbitrary high-order, unstructured method for the solving the compressible Navier Stokes (CNS) equation. High order methods suffer from aliasing instabilities which leads to robustness issues. I showed that we can solve this issue if we used split forms. In addition, split forms work well with wall modeling to enable high Reynolds' number flows.  
 
 ### IIT Kanpur 
 BTech-MTech in Aerospace Engineering<br/>
