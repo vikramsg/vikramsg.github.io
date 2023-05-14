@@ -7,9 +7,16 @@ author_profile: true
 
 ## Experience
 
+### Cervest 
+Software Engineer<br/> 
+*Jan 2022 – Present*
+
+At Cervest, I work on productionizing ML models that predict physical risk for customer assets due to climate change.  
+
+
 ### Max Planck Institute for Meteorology
 Postdoctoral Researcher<br/> 
-*Jul 2019 – Present*
+*Jul 2019 – Dec 2021*
 
 At MPIM, I work on the ocean model ICON-O. Keeping climate models stable is a complex problem and requires careful analysis of the numerical method. I have been working on improving the structure preserving numerics of ICON-O to push the model towards more flexibility and robustness.
 
