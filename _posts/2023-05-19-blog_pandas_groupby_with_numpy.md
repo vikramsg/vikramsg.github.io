@@ -1,17 +1,17 @@
 ---
 layout: single
 title:  "Using NumPy to replace Pandas GroupBy-Apply pattern for performance"
-date:   2023-05-19
+date:   2023-05-18
 ---
 
-At my dayjob we are starting to use PyPpark a lot. 
-The DataFrame API is great however there are times when it is not sufficient
+At my dayjob we are starting to use PySpark a lot. 
+The DataFrame API is great, however there are times when it is not sufficient
 because it does not cover every single piece of functionality we may want.
 This is where the [Pandas UDF](https://spark.apache.org/docs/3.1.2/api/python/user_guide/arrow_pandas.html) functionality comes in. 
 The nice thing about the Pandas UDF functionality is that it uses Arrow for data transfer
 between Spark and Pandas which minimizes serialization-deserialization costs. 
 I have a slight preference for Pandas Function API over Pandas UDF 
-but let's now get to the meat of the post which is about speeding up 
+but now let's get to the meat of the post which is about speeding up 
 the Pandas GroupBy-Apply pattern by using NumPy instead. 
 
 ## Setup data
@@ -59,7 +59,7 @@ def pandas_groupby(df: pd.DataFrame) -> pd.DataFrame:
     )
 ```
 
-That's pretty easy, right? This does what we want, although
+That's pretty easy, right? It does what we want, although
 Pandas does weird stuff when you do GroupBy. It creates a multi-index
 with the columns that were used for the GroupBy. 
 So, for example, if we were to use this UDF for PySpark, we would 
@@ -67,10 +67,10 @@ waste processing time resetting the index. But that's Pandas.
 
 ## NumPy 
 
-How would we do this in NumPy. There is no GroupBy in NumPy. 
+How would we do this in NumPy? There is no GroupBy in NumPy. 
 There's a very old [NEP](https://numpy.org/neps/nep-0008-groupby_additions.html)
 that proposed this, but obviously it was not implemented. 
-So, how would we do this. 
+So, how would we do this? 
 Essentially what we need to do is group indices for category and year first. 
 NumPy has a nice way of doing this with `lexsort`.  
 
@@ -108,9 +108,9 @@ Well, that is because `apply_along_axis` wants to use the first
 argument of the function being passed, even though we are specializing that
 in the function arguments. So, we had to create a wrapper to make
 `y_values` be the first argument.
-We can of course use different functions if that is what we wanted to do.
+We can of course use different functions, if that is what we wanted to do.
 So that's it. We have implemented the same functionality.
-But why do this? That takes us to.... benchmarking.
+But why do this? This brings us to.... benchmarking.
 
 ## Benchmarking
 
@@ -137,7 +137,7 @@ This will run the 2 functions a 100 times, and repeat it 5 times which
 is the default value for `repeat`. The output will be then
 a list of 5 numbers for each of the 2 function calls.
 Each of the 5 numbers represent the time for one of the 5 runs.
-I am running this on a 2019 Macbook with an i9 Intel processor.  
+I am running this on a 2019 MacBook with an i9 Intel processor.  
 And here are the results. 
 
 ```
@@ -148,12 +148,30 @@ Pandas times: [0.36932151, 0.36356516000000005, 0.358974868, 0.3752171339999999,
 Well, clearly we can see almost an order of magnitude(10X) improvement in performance.
 That is A LOT. 
 And as our data becomes bigger and bigger in size, 
-this can be the difference between having a $500 vs a $5000 job. 
-Or $5000 vs $50000. Or.... you get the point.
+this can be the difference between having a `$500` vs a `$5000` job. 
+Or `$5000` vs `$50000`. Or.... you get the point.
+
+## Closing thoughts
+
+So, is the conclusion that we need to write everything in NumPy. 
+Well, it's complicated. 
+But here are the steps that I would go through to decide what to do.
+
+1. Don't write a UDF. Don't do it!
+2. If you have to write a UDF, use a Pandas UDF. 
+3. Use Pandas API. Don't use NumPy. 
+4. But if costs start becoming a concern, use NumPy. 
+5. Benchmark your UDF. Then benchmark some more. 
+
+I would also have liked to have a look at whether we could
+speed up the NumPy code even more with Numba. 
+Unfortunately Numba does not support `lexsort`.
+But all in all, I am happy with the performance while keeping the code fairly simple. 
 
 ## Code
 
-The code is available [here](https://github.com/vikramsg/blog_code/tree/main/numpy_groupby). 
+The code is available 
+[here](https://github.com/vikramsg/blog_code/tree/main/numpy_groupby/groupby_profile.py). 
 
 
 
