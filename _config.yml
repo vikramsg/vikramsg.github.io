@@ -97,7 +97,7 @@ author:
   avatar           : "/assets/images/profile.jpg"
   bio              : # "I am an **amazing** person."
   location         : "Hamburg, Germany"
-  email            : vikram.singh@mpimet.mpg.de
+  # email            : vikram.singh@mpimet.mpg.de
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
