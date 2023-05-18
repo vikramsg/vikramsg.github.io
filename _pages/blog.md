@@ -4,7 +4,7 @@ layout: archive
 permalink: /Blog/
 author_profile: true
 comments: true
-signup: true
+# signup: true
 ---
 
 {% assign postsByYear = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
