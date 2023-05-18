@@ -273,4 +273,4 @@ defaults:
       comments: # true
       share: true
       related: true
-      signup: true
+      # signup: true # Removing signup
