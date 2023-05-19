@@ -4,8 +4,8 @@ title:  "Using NumPy to replace Pandas GroupBy-Apply pattern for performance"
 date:   2023-05-18
 ---
 
-At my dayjob we are starting to use PySpark a lot. 
-The DataFrame API is great, however there are times when it is not sufficient
+If you use PySpark a lot you would know that the DataFrame API is great. 
+However there are times when it is not sufficient
 because it does not cover every single piece of functionality we may want.
 This is where the [Pandas UDF](https://spark.apache.org/docs/3.1.2/api/python/user_guide/arrow_pandas.html) functionality comes in. 
 The nice thing about the Pandas UDF functionality is that it uses Arrow for data transfer
