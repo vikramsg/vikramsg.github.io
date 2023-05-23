@@ -100,4 +100,8 @@ I had the chance to look at Numba, and believe me sometimes it can really be way
 However, know that this is not guaranteed and so, always Benchmark!
 
   
+## Code
+
+The code is available 
+[here](https://github.com/vikramsg/blog_code/tree/main/numpy_groupby/groupby_profile.py). 
 
