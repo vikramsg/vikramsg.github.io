@@ -94,7 +94,7 @@ In fact, it is slower than the Pandas time!
 ## Final thoughts
 
 I am sure that there are optimizations that could be tried.
-But Numba itself was pretty finicky and it was so slow that I did not want to delve deeper
+But Numba itself was pretty finicky and it was so slow that I did not want to delve deeper.
 Still, I think it was an interesting exercise. 
 I had the chance to look at Numba, and believe me sometimes it can really be way faster.
 However, know that this is not guaranteed and so, always Benchmark!
