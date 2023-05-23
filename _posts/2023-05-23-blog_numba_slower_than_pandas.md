@@ -66,11 +66,11 @@ But this is simpler to solve.
 This is just an optimized for loop, so let's just create a for loop and hopefully Numba should take care of speedup.
 
 ```
-    interpolate_values = np.zeros(reshape_x_size)
-    for i in range(reshape_x_size):
-        interpolate_values[i] = np.interp(
-            x=_INTERPOLATE_AT, xp=x_unique_values, fp=y_values[i, :]
-        )
+interpolate_values = np.zeros(reshape_x_size)
+for i in range(reshape_x_size):
+    interpolate_values[i] = np.interp(
+        x=_INTERPOLATE_AT, xp=x_unique_values, fp=y_values[i, :]
+    )
 ```
 
 ## Benchmarking
