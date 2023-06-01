@@ -11,20 +11,33 @@ author_profile: true
 Software Engineer<br/> 
 *Jan 2022 – Present*
 
-At Cervest, I work on productionizing ML models that predict physical risk for customer assets due to climate change.  
+* Productionized machine learning models in collaboration with Data Scientists by creating Python libraries and introducing reusable CI/CD workflows using GitHub Actions.
+* Implemented ELT/ETL data pipelines using Argo workflows on Kubernetes (AWS EKS) to accelerate data validation times from 40 hours to 1 hour.
+* Lead the migration of data pipelines for processing multiple TB's of data to Databricks which uses PySpark's distributed capabilities.
+* Optimized PySpark Pandas UDF using NumPy to reduce costs by 20 times.
+* Contributed to FastAPI based library for delivering data within a Service Oriented Architecture(SOA) framework.
+* Created Hyperparameter optimization for statistical models, reducing workflow time by 10x.
+* Helped promote best practices by upskilling others using pair programming, proposing improvements in ways of working and collaborating on code guidelines.
+* Contributed to the open source AWS SDK for Pandas.
+
 
 
 ### Max Planck Institute for Meteorology
 Postdoctoral Researcher<br/> 
 *Jul 2019 – Dec 2021*
 
-At MPIM, I work on the ocean model ICON-O. Keeping climate models stable is a complex problem and requires careful analysis of the numerical method. I have been working on improving the structure preserving numerics of ICON-O to push the model towards more flexibility and robustness.
+* Developed new mathematical model for the in-house climate model that delivered increased precision and accuracy.
+* Built Python based ETL pipelines for visualization of large climate geospatial data output from climate model simulations.
+* Co-ordinated projects with multiple researchers in multiple countries resulting in new publications.
+
+
 
 ### Aeronautical Development Agency
 Scientist<br/> 
 *Aug 2009 – Oct 2015*
 
-At ADA, I worked on concept design for a new aircraft project. I used Genetic Algorithms and CFD to derive optimised configurations. I built a Multi-Disciplinary Optimization framework in Python which allowed constraints such as weight, volume and signature to be included. I won the DRDO young scientist award for this work.
+* Developed a Python-based Hyperparameter Tuning framework for aerodynamic design, resulting in new configuration design delivery time reducing from 5 days to 10 hours.
+* Utilized Genetic Algorithms for optimized configuration derivation and achieved significant results that earned me the DRDO Young Scientist Award.
 
 
 ## Education
