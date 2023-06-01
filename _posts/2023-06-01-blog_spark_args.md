@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Sometimes Numba can be slower than even Pandas... or why you should always benchmark"
+title:  "Using arguments in a Pandas UDF for PySpark"
 date:   2023-06-01
 ---
 
@@ -17,7 +17,7 @@ While both of them address the UDF question, the actual function implemented sti
 so that simplifies what we want to address in this post. 
 
 Suppose, just as before, we create a Pandas DataFrame for 3 categories, and have a column represent sales
-over a year.
+over a year. 
 
 ```
 _CATEGORIES = ["red", "green", "blue"]
@@ -35,6 +35,7 @@ def create_dataframe() -> pd.DataFrame:
     return pd.DataFrame(data, columns=["category", "year", "x", "y"])
 ```
 
+We can easily convert this to a Spark dataframe using `spark.createDataFrame`. 
 Next, we want to get sales after a particular fraction of the year. 
 Previously, we did the groupBy inside the Pandas function, but let's do it using PySpark now. 
 
@@ -61,10 +62,10 @@ interpolated_df_global_args = spark_df.groupBy(F.col("category"), F.col("year"))
 Notice that the Pandas Function `numpy_groupby_global_args` has a specific signature.
 We can omit the first argument, and it will still work, but that's about the extent of the flexibility.
 This is the required signature. So, to decide at what fraction of the year we want to interpolate at, 
-we have used global arguments. This is... ugly, but it gets the job done. For now. 
+we have used the global variable `_INTERPOLATE_AT`. This is... ugly, but it gets the job done. For now. 
 
 However, what if we got the argument from a file, or CLI args. In theory, we could still use global arguments, 
-but it gets messy really quickly. And testing becomes hard as well. So what do we do. 
+but it gets messy really quickly. And testing becomes hard as well. So what do we do? 
 
 ## Use partial for arguments 
 
@@ -101,5 +102,5 @@ If you have a better pattern, I would be interested to know.
 ## Code
 
 The code is available 
-[here](https://github.com/vikramsg/blog_code/tree/main/numpy_groupby/groupby_profile.py). 
+[here](https://github.com/vikramsg/blog_code/blob/main/spark_arguments/spark_args.py). 
 
