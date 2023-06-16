@@ -119,6 +119,6 @@ Of course, `gpt` just works. But I look forward to other models atleast try to c
 
 The code is available [here](https://github.com/vikramsg/blog_code/blob/main/langchain_summarizer/src/summarize.py). 
 `gpt-3.5-turbo` and `pythia` are fairly easy to use since they are both API's but `gpt4all` requires some setup work. 
-This is explained in the README file.
+This is explained in the [README](https://github.com/vikramsg/blog_code/tree/main/langchain_summarizer) file.
 
 
