@@ -171,3 +171,45 @@ Plus, you control the retries explicity rather than through indirections.
 
 
 ## Composability using decorators
+
+Going through this exercise really highlighted to me how powerful decorators are. 
+There are many examples of how they are being used in a similar manner. 
+Consider Airflow. 
+
+```python
+from airflow.decorators import dag, task
+
+@dag
+def my_dag():
+    @task
+    def task1():
+        # Task 1 logic goes here
+
+    @task
+    def task2():
+        # Task 2 logic goes here
+```
+
+This is such a nice way of defining the DAG. 
+You just write the functions for a task and wrap it with a decorator and it becomes a DAG(of course you also need to define inter task dependencies). 
+
+Or Numba, which we touched upon in a [previous post](../blog_numba_slower_than_pandas/). 
+
+```python
+from numba import njit
+
+@njit
+def plus_one(a):
+    return a+1
+```
+
+I think this is a template that should be followed to make Python libraries more composable, as opposed to the boilerplate we needed to do for Retry.
+
+
+## Final thoughts
+
+This post became longer than I had originally thought, but I figured out that these are the steps I went through to make this realization. 
+Library design is not easy, but recognizing these patterns will lead to better designs. 
+Decorators really make trying out new stuff super simple and I wish to see more of this in the future. 
+
+
