@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Comparing GPT with Open Source LLM's"
+title:  "Decorators in Python make composability easier"
 date:   2023-06-21
 ---
 
@@ -27,7 +27,7 @@ def _request():
 ```
 
 This would ensure that everytime we call `_request`, we would wait 1 second after the `get` request, ensuring less than 60 requests per minute. 
-But as I started working with this code, some issues started becoming annoying. 
+But while working with this code, I started seeing issues. 
 First I had to introduce a timeout inside the `get` request. 
 
 ```
@@ -60,7 +60,7 @@ def session_with_retry() -> requests.Session:
     return session
 ```
 
-In the function, `retries = 3` ensures that if the connection fails, `requests` will try 3 more times.  
+In the function, `retries = 3` ensures that if the connection fails, `requests` will try 3 more times.
 The `backoff_factor` ensures that after each failure past the second try, the request waits [exponentially longer](https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html). 
 
 ```
@@ -86,24 +86,18 @@ And remarkably, it solved my first problem. I no longer had to use the `_request
 Instead of a REST API, I could use the `pyhafas` API!
 
 ```python
+from pyhafas import HafasClient
+
 def _journey():
     client = HafasClient()
-    return client.journeys(  # type: ignore
+    return client.journeys(  
             origin=origin,
             destination=destination,
-            date=time_val,
-            products={
-                "long_distance_express": False,
-                "long_distance": False,
-                "ferry": False,
-                "bus": False,
-                "suburban": False,
-                "subway": False,
-            },
+            ...
         )
 ```
 
-But I still had my second problem. A few requests, and I would get Connection Error. And now I did not have direct control
+But I still had my second problem. A few requests, and I would get Connection Error. And now I don't have direct control
 over the Retry strategy. 
 So, I decided to create my own!
 
@@ -208,7 +202,8 @@ I think this is a template that should be followed to make Python libraries more
 
 ## Final thoughts
 
-This post became longer than I had originally thought, but I figured out that these are the steps I went through to make this realization. 
+This post became longer than I had originally thought, but I figured that these are the steps I went through to make this realization.
+And so I needed the context to be clear.
 Library design is not easy, but recognizing these patterns will lead to better designs. 
 Decorators really make trying out new stuff super simple and I wish to see more of this in the future. 
 
