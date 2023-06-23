@@ -23,7 +23,7 @@ Software Engineer<br/>
 
 
 ### Max Planck Institute for Meteorology
-Postdoctoral Researcher<br/> 
+Scientific Programmer<br/> 
 *Jul 2019 – Dec 2021*
 
 * Developed new mathematical model for the in-house climate model that delivered increased precision and accuracy.
@@ -33,7 +33,7 @@ Postdoctoral Researcher<br/>
 
 
 ### Aeronautical Development Agency
-Scientist<br/> 
+Engineer<br/> 
 *Aug 2009 – Oct 2015*
 
 * Developed a Python-based Hyperparameter Tuning framework for aerodynamic design, resulting in new configuration design delivery time reducing from 5 days to 10 hours.
