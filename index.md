@@ -4,7 +4,9 @@ layout: single
 author_profile: true
 ---
 
-I am a Software Engineer working at Cervest working to bring 
+I am a Senior Data Engineer working at [Orbio](https://www.orbio.earth/)
+helping make methane predictions more accurate.
+Previously I was a Software Engineer at Cervest working to bring 
 ML models to life that predict physical risk to customer assets due to climate change. 
 
 In a past life, I spent a few years in academia working on various computational physics problems.
