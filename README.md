@@ -42,6 +42,16 @@ Once the server is running, you can view your website by navigating to `http://l
 
 4.  **Write your content**: Write your blog post content below the front matter using Markdown.
 
+## What is Where
+
+*   **Home Page**: The content of the home page (the "About Me" section) can be edited in `index.md` in the root directory.
+*   **Navigation Tabs**: To add, remove, or edit the navigation tabs (e.g., "Blog"), modify the `_data/navigation.yml` file.
+*   **Blog Page**: The page that lists all the blog posts is located at `_pages/blog.md`.
+*   **Author Profile**: The author profile information (displayed on the left side) is configured in the `_config.yml` file.
+*   **Newsletter Signup**: The newsletter signup form is located in `_data/signup.html`. It is included in pages based on the `signup: true` property in the front matter.
+    - This is not yet implemented completely though.
+*   **Page Layouts**: The general page layouts are defined in the `_layouts` directory. For example, `single.html` is used for single posts.
+
 ## Deployment
 
 This blog is hosted on GitHub Pages. To deploy any changes, commit them and push to the `master` branch of your `username.github.io` repository.
@@ -49,5 +59,6 @@ This blog is hosted on GitHub Pages. To deploy any changes, commit them and push
 ```bash
 git add .
 git commit -m "Your commit message"
-git push origin master
+git push 
+# Create a PR
 ```
