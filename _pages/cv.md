@@ -7,9 +7,18 @@ author_profile: true
 
 ## Experience
 
+### Orbio 
+Senior Software Engineer<br/> 
+*December 2023 – Present*
+
+* Productionize machine learning models in collaboration with Data Scientists but on Gitlab instead of Github this time! 
+* Implemented ELT/ETL data pipelines to predict methane emissions but on Airflow this time! 
+* Mentor Engineers and Scientist to improve code quality and ways of working. 
+
+
 ### Cervest 
 Software Engineer<br/> 
-*Jan 2022 – Present*
+*Jan 2022 – June 2023*
 
 * Productionized machine learning models in collaboration with Data Scientists by creating Python libraries and introducing reusable CI/CD workflows using GitHub Actions.
 * Implemented ELT/ETL data pipelines using Argo workflows on Kubernetes (AWS EKS) to accelerate data validation times from 40 hours to 1 hour.
