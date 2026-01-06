@@ -18,7 +18,7 @@ In part 2, I will try to show how it can be wired up so that we make sure softwa
 
 First a warning, and then if you stick around, we can go deeper.
 My dive into formal methods was motivated by posts like [this](https://martin.kleppmann.com/2025/12/08/ai-formal-verification.html).
-I have been increasingly using AI/Agents and I believe something is required to make the use of AI more productive. 
+I have been increasingly using AI Agents and I believe something is required to make the use of AI more productive. 
 And if the word AI is triggering, then this would be a good time to stop reading.
 If you are still here, let's talk about AI a little bit, and the programming language for AI - English.
 
@@ -54,7 +54,7 @@ If that feels familiar, hopefully the following points to a way forward.
 This isn't a new problem. 
 Decades ago, Leslie Lamport (the creator of LaTeX and distributed systems legend) gave us [TLA+](https://en.wikipedia.org/wiki/TLA%2B) (Temporal Logic of Actions).
 It is the gold standard for formal verification. 
-It is used by AWS to design DynamoDB and S3. It is used by Azure. It works.
+It is used by AWS (DynamoDB, S3) and Azure. It works.
 
 But then I looked at TLA+. 
 And this is what it looks like.
@@ -132,6 +132,7 @@ Next, we define what *can* happen. These are the rules of the road.
   // Client receives SYN-ACK, sends ACK
   action ReceiveSynAck = all {
     client_state == SYN_SENT,
+    server_state == SYN_RCVD,
     client_state' = ESTABLISHED,
     server_state' = server_state
   }
@@ -146,7 +147,7 @@ We are not saying "Run `SendSyn` then `ReceiveSyn`".
 In Quint, these actions are a menu of choices.
 At every step, the system (the Quint simulator) asks: "Which of these actions is allowed to happen right now?",
 for example,
-at the beginning everyone is `INIT`.
+at the beginning, everyone is in the `INIT` state.
 
 -   Can `ReceiveSyn` happen? No. It requires `client_state == SYN_SENT`.
 -   Can `SendSyn` happen? Yes. It requires `client_state == INIT`.
@@ -189,14 +190,17 @@ To summarize, with Quint we get:
 2.  **Simulation**: A way to run the spec and explore behaviors (like fuzzing).
 3.  **Invariants**: A way to define properties that must *always* be true.
 
-### The Reality Check (Caveats)
+### Caveats
 
-Having just read all of that, I do have to warn about shortcomings.
+Having just gone through all of that, I do have to warn about shortcomings.
 Formal methods and spec driven development isn't the single solution to all our problems.
 Notably:
 
-- The model is only as good as our description of the world. If we don't model the complete system (or are unable to) then there are gaps. 
-- We are not solving for non functional requirements like performance, readability etc. 
+1. The model is only as good as our description of the world. If we don't model the complete system (or are unable to) then there are gaps. 
+  - Note that tools like TLA+ and Quint are best suited for modeling a state machine. 
+  - So figure out which parts of your system is a state machine and which parts pure functions.
+  - Model functions using unit tests.
+2. We are not solving for non functional requirements like performance, readability etc. 
 
 ## What's Next?
 
