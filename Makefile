@@ -17,7 +17,6 @@ setup:
 
 update:
 	@echo "Removing local theme overrides..."
-	rm -rf _sass/minimal-mistakes
 	@echo "Updating gems..."
 	bundle update
 
