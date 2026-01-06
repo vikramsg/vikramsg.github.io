@@ -7,8 +7,8 @@ date: 2026-01-06
 # Introduction to Formal Methods (Part 1): Why Spec First?
 
 Formal methods, sounds very... formal!
-But I have been trying to dive a bit into what they are and so I decided to write down my learnings.
-Hopefully this proves a good starting point for someone else who was curious about the idea but didn't have a good starting point.
+But I have been trying to explore what they are and so I decided to write down my learnings.
+Hopefully this proves a good starting point for someone else who is curious about the idea but doesn't have a good starting point.
 
 This post is part 1 of 2. 
 In part 1, I will try to give a more conceptual understanding, while also introducing tooling using `Quint`.
