@@ -9,6 +9,7 @@ help:
 	@echo "  make build    - Build the site to ./_site"
 	@echo "  make clean    - Remove the generated ./_site directory"
 	@echo "  make post     - Create a new blog post (usage: make post TITLE='My New Post')"
+	@echo "  make update   - Update deps and remove theme"
 
 setup:
 	gem install bundler jekyll
@@ -19,6 +20,12 @@ build:
 
 serve:
 	bundle exec jekyll serve
+
+update:
+	@echo "Removing local theme overrides to use remote theme..."
+	rm -rf _sass/minimal-mistakes
+	@echo "Updating gems..."
+	bundle update
 
 preview: serve
 
