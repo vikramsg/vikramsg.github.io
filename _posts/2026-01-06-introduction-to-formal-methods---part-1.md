@@ -117,7 +117,7 @@ Next, we define what *can* happen. These are the rules of the road.
   // Client sends SYN
   action SendSyn = all { // 'all' means all statements must hold true (Logical AND)
     client_state == INIT,        // Precondition: Client must be INIT
-    client_state' = SYN_SENT,    // Transition: Client moves to SYN_SENT
+    client_state' = SYN_SENT,    // Transition: Client moves to SYN_SENT (Note the ' for next state)
     server_state' = server_state // Server state doesn't change yet
   }
 
@@ -188,6 +188,15 @@ To summarize, with Quint we get:
 1.  **A Readable Spec**: A precise description of the system (State & Transitions) that is easy to read.
 2.  **Simulation**: A way to run the spec and explore behaviors (like fuzzing).
 3.  **Invariants**: A way to define properties that must *always* be true.
+
+### The Reality Check (Caveats)
+
+Having just read all of that, I do have to warn about shortcomings.
+Formal methods and spec driven development isn't the single solution to all our problems.
+Notably:
+
+- The model is only as good as our description of the world. If we don't model the complete system (or are unable to) then there are gaps. 
+- We are not solving for non functional requirements like performance, readability etc. 
 
 ## What's Next?
 
