@@ -136,6 +136,21 @@ Next, we define what *can* happen. These are the rules of the road.
     client_state' = ESTABLISHED,
     server_state' = server_state
   }
+
+  // Server receives ACK
+  action ReceiveAck = all {
+    server_state == SYN_RCVD,
+    client_state == ESTABLISHED,
+    server_state' = ESTABLISHED,
+    client_state' = client_state
+  }
+
+  action step = any {
+    SendSyn,
+    ReceiveSyn,
+    ReceiveSynAck,
+    ReceiveAck,
+  }
 }
 ```
 
