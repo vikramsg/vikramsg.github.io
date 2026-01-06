@@ -1,31 +1,31 @@
-.PHONY: help setup build serve preview clean post
+.PHONY: help setup build serve preview clean update post
 
 # Default target
 help:
 	@echo "Available commands:"
-	@echo "  make setup    - Install dependencies (bundler, jekyll, gems)"
+	@echo "  make setup    - Install dependencies (gems) locally"
+	@echo "  make update   - Remove local theme overrides and update gems"
 	@echo "  make serve    - Serve the site locally at http://localhost:4000"
 	@echo "  make preview  - Alias for 'serve'"
 	@echo "  make build    - Build the site to ./_site"
 	@echo "  make clean    - Remove the generated ./_site directory"
 	@echo "  make post     - Create a new blog post (usage: make post TITLE='My New Post')"
-	@echo "  make update   - Update deps and remove theme"
 
 setup:
-	gem install bundler jekyll
+	@echo "Installing dependencies..."
 	bundle install
+
+update:
+	@echo "Removing local theme overrides..."
+	rm -rf _sass/minimal-mistakes
+	@echo "Updating gems..."
+	bundle update
 
 build:
 	bundle exec jekyll build
 
 serve:
 	bundle exec jekyll serve
-
-update:
-	@echo "Removing local theme overrides to use remote theme..."
-	rm -rf _sass/minimal-mistakes
-	@echo "Updating gems..."
-	bundle update
 
 preview: serve
 
