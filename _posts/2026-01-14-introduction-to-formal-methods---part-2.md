@@ -224,3 +224,7 @@ Instead of struggling with English to produce concrete requirements,
 we can collaborate with our favourite agent to produce a spec for the set of components we are building.
 And if the tooling is in place, we can just tell the agent to build the component, 
 and the trace tests will make sure we adhere to the spec.
+
+## Code
+
+The code used in this post can be found [here](https://github.com/vikramsg/blog_code/tree/main/tla).
