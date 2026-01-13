@@ -38,7 +38,7 @@ If the test passes, we know our code handles the scenarios defined by the spec c
 
 In Part 1, we ran `quint run` to see text output.
 Now, we want a machine-readable format. 
-Quint supports the a format known as ITF. 
+Quint supports a format called ITF. 
 Luckily, its a JSON format, meaning its both easy to read as well as integrate in code.
 
 Running:
@@ -131,7 +131,8 @@ If we messed up the transition logic, the state wouldn't match the spec.
 
 ### Step 3: The Replay Test
 
-This is the magic glue. We write a test that reads the JSON trace and drives the Python model.
+The way we ensure the implementation matches the spec is by doing replay tests. 
+We write a test that reads the JSON trace and drives the Python model.
 
 ```python
 # test_tcp.py (simplified)
@@ -158,8 +159,8 @@ def main():
              raise Exception(f"Action {action} failed at step {i}")
              
         # Verify state matches
-        assert model.state.client_state == state_json["client_state"]["tag"]
-        assert model.state.server_state == state_json["server_state"]["tag"]
+        assert model.state.client_state.value == state_json["client_state"]["tag"]
+        assert model.state.server_state.value == state_json["server_state"]["tag"]
 
     print("Trace verified successfully!")
 ```
@@ -172,11 +173,11 @@ If the implementation (Python) and the Spec (Quint) disagree, this test fails.
 
 1.  It gives us fuzzing for free. Quint's random simulation generates edge cases we might forget to test manually.
 2.  The spec is documentation, and the tests ensure the code respects it.
-3.  It makes an unrepresentatble state impossible. By using Tagged Unions, we ensure that the code can only ever be in a valid state.
+3.  We made unrepresentable state impossible (within the margins of how strict one can be with types in Python). By using Pydantic tagged unions, we ensure that the code can only ever be in a valid state.
 
 ### Scaling Up
 
-In this simple TCP example, the logic is linear, so every random trace looks identical.
+In this simple TCP example, the logic is linear because of guears we put in the spec, so every random trace looks identical.
 However, for complex protocols, we typically run this process in a loop (generating lots of traces).
 Since Quint picks random paths, this effectively fuzzes any implementation against the spec.
 
@@ -214,9 +215,9 @@ I believe verification aware languages like Dafny could possibly bridge the gap 
 
 ## Conclusion
 
-So, we went form high level requirement to a formal spec in Quint.
+So, we went from high level requirement to a formal spec in Quint.
 We did verification via model checking in Quint.
-Then actually did an implementation and showed the mechanism for proving the implementation matches the spec.
+Then actually did an implementation and showed the mechanism for proving the implementation matches the spec (in a fuzzy sense).
 Pretty neat!
 
 I hope that is a convincing argument to think about adopting specs to make working with Agents easier.
