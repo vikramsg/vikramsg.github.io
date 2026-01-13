@@ -177,7 +177,7 @@ If the implementation (Python) and the Spec (Quint) disagree, this test fails.
 
 ### Scaling Up
 
-In this simple TCP example, the logic is linear because of guears we put in the spec, so every random trace looks identical.
+In this simple TCP example, the logic is linear because of guards we put in the spec, so every random trace looks identical.
 However, for complex protocols, we typically run this process in a loop (generating lots of traces).
 Since Quint picks random paths, this effectively fuzzes any implementation against the spec.
 
