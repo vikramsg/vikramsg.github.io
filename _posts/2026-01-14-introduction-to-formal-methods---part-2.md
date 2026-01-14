@@ -1,10 +1,8 @@
 ---
 layout: single
-title: "Introduction to Formal Methods - Part 2"
+title: "Introduction to Formal Methods (Part 2): From Spec to Code"
 date: 2026-01-14
 ---
-
-# Introduction to Formal Methods (Part 2): From Spec to Code
 
 In [Part 1]({% post_url 2026-01-06-introduction-to-formal-methods---part-1 %}), we talked about the "Why".
 Why write a spec? Because English is ambiguous, and debugging design flaws in code is expensive.

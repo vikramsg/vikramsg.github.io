@@ -1,10 +1,8 @@
 ---
 layout: single
-title: "Introduction to Formal Methods - Part 1"
+title: "Introduction to Formal Methods (Part 1): Why Spec First?"
 date: 2026-01-06
 ---
-
-# Introduction to Formal Methods (Part 1): Why Spec First?
 
 Formal methods, sounds very... formal!
 But I have been trying to explore what they are and so I decided to write down my learnings.
