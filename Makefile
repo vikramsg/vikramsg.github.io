@@ -1,4 +1,4 @@
-.PHONY: help setup build serve preview clean update post
+.PHONY: help setup build serve serve-future preview clean update post
 
 # Default target
 help:
@@ -6,6 +6,7 @@ help:
 	@echo "  make setup    - Install dependencies (gems) locally"
 	@echo "  make update   - Remove local theme overrides and update gems"
 	@echo "  make serve    - Serve the site locally at http://localhost:4000"
+	@echo "  make serve-future - Serve the site locally including future posts"
 	@echo "  make preview  - Alias for 'serve'"
 	@echo "  make build    - Build the site to ./_site"
 	@echo "  make clean    - Remove the generated ./_site directory"
@@ -25,6 +26,10 @@ build:
 
 serve:
 	bundle exec jekyll serve
+
+# Jekyll hides future-dated posts by default. Use this to preview them.
+serve-future:
+	bundle exec jekyll serve --future
 
 preview: serve
 
