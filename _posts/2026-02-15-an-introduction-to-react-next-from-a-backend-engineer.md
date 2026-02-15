@@ -4,6 +4,8 @@ title: "An introduction to React/Next from a backend engineer"
 date: 2026-02-15
 ---
 
+{% include mermaid.html %}
+
 I am not completely new to React.
 A couple of years ago I spent a few weeks struggling with frontend tools to create [49travel](https://49travel.vercel.app).
 I learnt a lot about tooling, especially Vercel, a little bit about React but I can hardly say I really understood it.
@@ -23,6 +25,22 @@ You went to a website in your browser, entered a URL, and the browser would do a
 The server would send back some HTML, and the job of the browser was to accurately render the HTML.
 But that was mostly it.
 The browser's main job was to be a rendered and send whatever interactive requests you made to the server.
+
+<div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Enter URL
+    Browser->>Server: GET /index.html
+    Server-->>Browser: HTML (Full Page)
+    Browser-->>User: Render Page
+    User->>Browser: Click Link
+    Browser->>Server: GET /about.html
+    Server-->>Browser: HTML (Full Page)
+    Browser-->>User: Render New Page
+</div>
 
 And then came Javascript.
 Javascript allowed the browser to not just be a renderer + HTTP client, but also a runtime.
@@ -45,6 +63,24 @@ the entire site could in theory never interact with the server again.
 Your site was now more or less like an app installed on your machine
 doing some computations, rendering etc using browser API's.
 
+<div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Enter URL
+    Browser->>Server: GET /index.html
+    Server-->>Browser: HTML (Empty Div) + bundle.js
+    Browser->>Browser: Execute JS (React)
+    Browser->>Server: GET /api/data (JSON)
+    Server-->>Browser: { "data": ... }
+    Browser-->>User: Render Content
+    User->>Browser: Click Link
+    Browser->>Browser: Update DOM (Client-side Routing)
+    Note over Browser, Server: No page reload!
+</div>
+
 But people had issues with this model. The so called `Single Page App` (SPA) model.
 React has some batteries but not enough so one usually introduces a lot of dependencies which directly affects bundle size. 
 As apps became more sophisticated, bundle sizes ballooned, and so load times increased.
@@ -58,6 +94,25 @@ One can have some functionality that is pure React, that is, client side.
 But its server first meaning if you lean into the Next way of thinking,
 when you open a url in the browser, Next renders on the server and sends the appropriate HTML + Javascript back.
 Therefore bundle sizes are smaller and time to first load can be much faster.
+
+<div class="mermaid">
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Server
+
+    User->>Browser: Enter URL
+    Browser->>Server: GET /index.html
+    Note over Server: Server renders React to HTML
+    Server-->>Browser: HTML (Pre-rendered Content) + bundle.js
+    Browser-->>User: Show Content (Fast FCP)
+    Browser->>Browser: Hydrate (Make Interactive)
+    User->>Browser: Click Link
+    Browser->>Browser: Client-side Navigation (like SPA)
+    Browser->>Server: GET /_next/data/... (JSON)
+    Server-->>Browser: { "pageProps": ... }
+</div>
+
 (But remember that if you mark some files as `use client` they increase bundle sizes, 
 even though Next will still decide how much to render on the server vs what executes on the client.)
 
@@ -74,10 +129,10 @@ It can sit on top of Next and can be used to build API's while also having an RP
 And you know for sure that any code running inside `Hono` is running on the server, including the middleware!
 
 
+## Disclaimer
 
-
-
-
+The blog post was completely written by a human, me!
+The diagrams were complete created by an LLM, Gemini (using Gemini 3 Pro Preview in the Gemini CLI)!
 
 
 
