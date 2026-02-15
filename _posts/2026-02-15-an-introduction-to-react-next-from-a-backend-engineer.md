@@ -24,7 +24,7 @@ In the beginning, there was HTML.
 You went to a website in your browser, entered a URL, and the browser would do a server request.
 The server would send back some HTML, and the job of the browser was to accurately render the HTML.
 But that was mostly it.
-The browser's main job was to be a rendered and send whatever interactive requests you made to the server.
+The browser's main job was to be a renderer and send whatever interactive requests you made to the server.
 
 <div class="mermaid">
 sequenceDiagram
@@ -82,7 +82,7 @@ sequenceDiagram
 </div>
 
 But people had issues with this model. The so called `Single Page App` (SPA) model.
-React has some batteries but not enough so one usually introduces a lot of dependencies which directly affects bundle size. 
+React is famously unopinionated and so one usually introduces a lot of dependencies which directly affects bundle size. 
 As apps became more sophisticated, bundle sizes ballooned, and so load times increased.
 Many were also very nostalgic for the old simpler server first approach. 
 And meantime Typescript was exploding in popularity because the developer experience is nicer with a types first approach.
@@ -104,19 +104,20 @@ sequenceDiagram
     User->>Browser: Enter URL
     Browser->>Server: GET /index.html
     Note over Server: Server renders React to HTML
-    Server-->>Browser: HTML (Pre-rendered Content) + bundle.js
+    Server-->>Browser: HTML (Pre-rendered Content) + RSC Payload
     Browser-->>User: Show Content (Fast FCP)
     Browser->>Browser: Hydrate (Make Interactive)
     User->>Browser: Click Link
     Browser->>Browser: Client-side Navigation (like SPA)
-    Browser->>Server: GET /_next/data/... (JSON)
-    Server-->>Browser: { "pageProps": ... }
+    Browser->>Server: GET /new-page (RSC Payload)
+    Server-->>Browser: RSC Payload (Streaming)
+    Browser->>Browser: Reconcile React Tree
 </div>
 
 (But remember that if you mark some files as `use client` they increase bundle sizes, 
 even though Next will still decide how much to render on the server vs what executes on the client.)
 
-But Next brings React's unopinionated nature to the server.
+But Next brings React's unopinionated nature to its API implementation.
 One can define API's in Next but its not very elegant and often can require a lot of boilerplate.
 And the middleware/proxy thing is really confusing.
 People have resorted to various ways to make this easier.
