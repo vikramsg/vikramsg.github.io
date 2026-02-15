@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "An introduction to React/Next from a backend engineer"
+title: "A Backend Engineer's Guide to Understanding React and Next.js"
 date: 2026-02-15
 ---
 
@@ -9,7 +9,7 @@ date: 2026-02-15
 I am not completely new to React.
 A couple of years ago I spent a few weeks struggling with frontend tools to create [49travel](https://49travel.vercel.app).
 I learnt a lot about tooling, especially Vercel, a little bit about React but I can hardly say I really understood it.
-Now its part of my job, so I do want to understand it better.
+Now it is part of my job, so I do want to understand it better.
 And what better way to understand it than by trying to write a blog post about it.
 
 A side note about that last statement.
@@ -52,16 +52,16 @@ Among other things.
 
 And then came React. 
 (I know, I know, that is a really bad chronology but I am not a historian so I will do my version!)
-React flipped the model completely using Javascript.
+React flipped the model to be more Javascript heavy.
 As against the server deciding completely what would show up on the browser,
-now the website became completely client side.
+now it became common for websites to become completely client side.
 In other words it was an app now!
 When you visited a website that was React based,
 the server would send a thin HTML but heavy Javascript bundle.
 Once you had completely downloaded it (completely unaware of course),
 the entire site could in theory never interact with the server again.
 Your site was now more or less like an app installed on your machine
-doing some computations, rendering etc using browser API's.
+doing some computations, rendering etc using browser APIs.
 
 <div class="mermaid">
 sequenceDiagram
@@ -86,12 +86,12 @@ React is famously unopinionated and so one usually introduces a lot of dependenc
 As apps became more sophisticated, bundle sizes ballooned, and so load times increased.
 Many were also very nostalgic for the old simpler server first approach. 
 And meantime Typescript was exploding in popularity because the developer experience is nicer with a types first approach.
-This lead to the creation of Next.
+This coincided with the creation of Next.
 It was the answer to the question, what if we could create a server first React framework but completely in React so that developers could build entire apps without changing language or git repo.
 
 Next has an opinionated way of how you structure apps.
 One can have some functionality that is pure React, that is, client side.
-But its server first meaning if you lean into the Next way of thinking,
+But it is server first meaning if you lean into the Next way of thinking,
 when you open a url in the browser, Next renders on the server and sends the appropriate HTML + Javascript back.
 Therefore bundle sizes are smaller and time to first load can be much faster.
 
@@ -105,7 +105,7 @@ sequenceDiagram
     Browser->>Server: GET /index.html
     Note over Server: Server renders React to HTML
     Server-->>Browser: HTML (Pre-rendered Content) + RSC Payload
-    Browser-->>User: Show Content (Fast FCP)
+    Browser-->>User: Show Content
     Browser->>Browser: Hydrate (Make Interactive)
     User->>Browser: Click Link
     Browser->>Browser: Client-side Navigation (like SPA)
@@ -114,45 +114,27 @@ sequenceDiagram
     Browser->>Browser: Reconcile React Tree
 </div>
 
-(But remember that if you mark some files as `use client` they increase bundle sizes, 
-even though Next will still decide how much to render on the server vs what executes on the client.)
-
 But Next brings React's unopinionated nature to its API implementation.
-One can define API's in Next but its not very elegant and often can require a lot of boilerplate.
+One can define APIs in Next but it's not very elegant and often can require a lot of boilerplate to wire up correctly to the frontend.
 And the middleware/proxy thing is really confusing.
 People have resorted to various ways to make this easier.
 One popular way is to use [`tRPC`](https://trpc.io/) where you write backend code and call it from your frontend
 and `tRPC` handles most of the wiring and boilerplate.
-But it does not help if you need to build API's.
+But it does not help if you need to build REST/HTTP APIs.
 The most elegant solution that I have found to address this is to use [`Hono`](https://hono.dev/).
 It is not a full blown server like Express but is still plenty powerful.
-It can sit on top of Next and can be used to build API's while also having an RPC like interface similar to `tRPC`.
+It can sit on top of Next and can be used to build APIs while also having an RPC like interface similar to `tRPC`.
 And you know for sure that any code running inside `Hono` is running on the server, including the middleware!
-
 
 ## Disclaimer
 
 The blog post was completely written by a human, me!
-The diagrams were complete created by an LLM, Gemini (using Gemini 3 Pro Preview in the Gemini CLI)!
+The diagrams were completely created by an LLM, Gemini (using Gemini 3 Pro Preview in the Gemini CLI)!
 
+## Notes
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- In Next if you mark some files as `use client` they increase bundle sizes, 
+even though Next will still decide how much to render on the server vs what executes on the client.
+- RSC stands for React Server Components which has more technical nuance but probably a subject for another blog post. Note also that Next has a Pages router which I have completely skipped over.
 
 
