@@ -115,7 +115,7 @@ sequenceDiagram
 </div>
 
 But building APIs in Next can be inelegant.
-One can define APIs in Next but it can require quite some boilerplate to wire up correctly to the frontend.
+It is of course possible to define all APIs using Next but it can require quite some boilerplate to wire up correctly to the frontend.
 And the middleware/proxy thing is really confusing.
 People have resorted to various ways to make this easier.
 One popular way is to use [`tRPC`](https://trpc.io/) where you write backend code and call it from your frontend
