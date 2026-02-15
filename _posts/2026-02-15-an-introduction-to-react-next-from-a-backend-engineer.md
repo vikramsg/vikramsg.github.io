@@ -123,13 +123,15 @@ and `tRPC` handles most of the wiring and boilerplate.
 But it does not help if you need to build REST/HTTP APIs.
 The most elegant solution that I have found to address this is to use [`Hono`](https://hono.dev/).
 It is not a full blown server like Express but is still plenty powerful.
-It can sit on top of Next and can be used to build APIs while also having an RPC like interface similar to `tRPC`.
+Next handles the entrypoint and then hands off API handling to Hono.
+One can build REST APIs with Hono while also having an RPC like interface similar to `tRPC`.
 And you know for sure that any code running inside `Hono` is running on the server, including the middleware!
 
 And that is where we will stop for today.
 This was definitely a highly compressed take on React and Next.
 I am sure that there were many technical nuances I completely glossed over
 but my objective was to create a good mental model of the frontend world as I see it.
+And hopefully create an entertaining post along the way!
 
 ## Disclaimer
 
