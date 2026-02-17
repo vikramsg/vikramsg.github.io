@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "A Backend Engineer's Guide to Understanding React and Next.js"
-date: 2026-02-15
+date: 2026-02-17
 ---
 
 {% include mermaid.html %}
