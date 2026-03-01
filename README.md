@@ -96,7 +96,7 @@ This site uses the **Minimal Mistakes** theme via the `remote_theme` method.
 
 ## Deployment
 
-This blog is hosted on GitHub Pages. To deploy any changes, commit them and push to the `master` branch.
+This blog is hosted on GitHub Pages. To deploy any changes, commit them and push to the `main` branch.
 
 ```bash
 git add .
