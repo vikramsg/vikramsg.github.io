@@ -6,7 +6,7 @@ date: 2026-08-26
 
 If I go through the halls of X, I would probably come back with a very confused opinion on the state of open source today.
 On the one hand there are examples like [`opencode`](https://github.com/anomalyco/opencode/pulls) with tons and tons of open PRs with seemingly no moderation mechanism.
-On the other hand there is ['ghostty'](https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md) which has introduced a [`Vouch`](https://github.com/ghostty-org/ghostty/pull/10559) system meaning only approved contributors can submit PRs.
+On the other hand there is [`ghostty`](https://github.com/ghostty-org/ghostty/blob/main/CONTRIBUTING.md) which has introduced a [`Vouch`](https://github.com/ghostty-org/ghostty/pull/10559) system meaning only approved contributors can submit PRs.
 But overall the feeling I get is that maintainers on popular open source projects are overwhelmed with PRs.
 And the worst offenders among these PRs are usually purely agent-written code.
 
