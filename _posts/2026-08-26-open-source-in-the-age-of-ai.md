@@ -72,3 +72,7 @@ After all 6 months ago, I had not used `opencode`. But right now it feels like m
 2 weeks ago, I had not used `herdr`. Now it's a core part of my daily workflow.
 So, I am rooting for more such projects succeeding.
 And hopefully there's enough Taste and Craft in them to make sure they become sustainable projects.
+
+## Disclaimer
+
+The entire post was hand-written (shocking!) by me (in `NeoVim` inside `herdr`). However I used GPT5.6 Sol to research all citations and put them in the slots I put in the post.
