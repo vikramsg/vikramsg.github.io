@@ -22,7 +22,7 @@ But what is happening is different and I am going to divide my observations into
 
 First, taste.
 It's a trending theme among on X. There are strong opinions being shared on what the most important characteristics required in engineers are right now.
-In fact, some claim it may be the only remaining characteristic required - [Citation](https://x.com/Saboo_Shubham_/status/2024173597443707149)
+In fact, some claim it may be the only [remaining characteristic required](https://x.com/Saboo_Shubham_/status/2024173597443707149)
 And I agree to an extent because I am seeing some projects coming up where the main distinguishing element is probably taste.
 
 Some examples of projects I have started to use are [`opencode`](https://github.com/anomalyco/opencode) and [`herdr`](https://github.com/herdrdev/herdr).
