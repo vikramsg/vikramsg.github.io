@@ -4,7 +4,7 @@ title: "Are GUIs really better than TUIs"
 date: 2026-09-01
 ---
 
-I did something via white coding, but I did it because I wanted to prove something about which I had a very strong opinion
+I did something via vibe coding, but I did it because I wanted to prove something about which I had a very strong opinion
 
 I had a strong opinion that gois are most definitely better than toys.
 I kept collecting that opinion as I worked with various apps and observed how I felt using each one.
