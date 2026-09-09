@@ -64,3 +64,15 @@ Frustrated with lack of development
 2. Date when I changed my OpenCode setup
 3. All OpenCode setup changes I have done since Sol
 
+## Sol
+
+1. Doesn't understand `gh stack` so always need to remind.
+2. Too happy to invoke subagents
+3. I need to create commands that do not invoke subagents
+4. We need a build prompt that has sections about invoking subagents that have the same lessons as our orchestrator
+  - Provide full context to implementation agent, especially if any decisions have already been made.
+  - Ask it to provide all decisions that it did during implementation not already decided 
+5. Need more control
+  - Planner should be smaller and always instruction to add implementation notes.md 
+6. docs, tickets everything leans how not what. Do not write a plan in a doc unless its specifically a plan
+
