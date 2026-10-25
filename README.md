@@ -5,38 +5,30 @@ The site is hosted at [https://vikramsg.github.io](https://vikramsg.github.io).
 
 ## Setup
 
-### 1. Prerequisites (Ruby via Homebrew)
-macOS comes with a "system Ruby" that is protected and often outdated. To avoid permission errors (`Gem::FilePermissionError`) and ensure compatibility, you should install a separate version of Ruby using Homebrew.
+### 1. Install mise
 
-1.  **Install Homebrew** (if not already installed):
-    ```bash
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    ```
+[mise](https://mise.jdx.dev/) manages the Ruby version pinned in `mise.toml`. On macOS or Linux, install its official prebuilt executable:
 
-2.  **Install Ruby**:
-    ```bash
-    brew install ruby
-    ```
+```bash
+curl -fsSL https://mise.run | sh
+```
 
-3.  **Update your PATH**: Add the Homebrew Ruby path to your shell configuration (e.g., `~/.zshrc` or `~/.bash_profile`). Homebrew will provide the specific path after installation, but it is typically:
-    ```bash
-    echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' >> ~/.zshrc
-    source ~/.zshrc
-    ```
+The installer writes `~/.local/bin/mise` without changing your shell configuration. That directory must be on `PATH`; if needed, run `export PATH="$HOME/.local/bin:$PATH"` for the current terminal session. See mise's [installation instructions](https://mise.jdx.dev/installing-mise.html) for other methods.
 
-### 2. Install Dependencies
-Once you are using the Homebrew-managed Ruby, you can set up the project dependencies.
+On macOS, Ruby gems with native extensions require Apple's Command Line Tools. If they are not already installed, run `xcode-select --install`. On Linux, install your platform's Ruby build dependencies.
 
-1.  **Install Bundler**:
-    ```bash
-    gem install bundler
-    ```
+### 2. Install project dependencies
 
-2.  **Install Project Gems**:
-    ```bash
-    make setup
-    ```
-    *Note: This uses the Makefile to install gems into a local `vendor/bundle` directory to keep your environment isolated.*
+From the repository root, review `mise.toml`, trust it once, and run setup:
+
+```bash
+mise trust
+make setup
+```
+
+Setup installs the pinned Ruby, the Bundler version recorded in `Gemfile.lock`, and the locked project gems into `vendor/bundle`. Commit `Gemfile.lock` when dependencies change so other machines use the same gem and Bundler versions.
+
+Make runs Ruby commands through `mise exec`, so no mise shell activation, Homebrew Ruby installation, or Ruby PATH edits are needed. For direct Ruby commands, use `mise exec -- ruby --version` or `mise exec -- bundle exec jekyll build`. Plain `ruby` or `bundle` can still select macOS's system Ruby if mise is not activated in your shell.
 
 ## Running the Blog Locally
 
@@ -51,8 +43,11 @@ Once the server is running, you can view your website by navigating to `http://l
 ## Makefile Commands
 
 The project includes a `Makefile` to automate common tasks:
-*   `make setup`: Installs the required Ruby gems.
+*   `make setup`: Installs pinned Ruby, the lockfile's Bundler, and project gems locally.
+*   `make update`: Updates gems and `Gemfile.lock`; it does not remove local theme overrides.
 *   `make serve`: Runs the Jekyll server with auto-regeneration.
+*   `make serve-future`: Includes future-dated posts when serving locally.
+*   `make preview`: Alias for `make serve`.
 *   `make build`: Builds the static site to the `_site` folder.
 *   `make post TITLE="Post Name"`: Scaffolds a new blog post with the correct date and front matter.
 *   `make clean`: Removes the generated site files.
@@ -91,7 +86,7 @@ This site uses the **Minimal Mistakes** theme via the `remote_theme` method.
 
 *   **Remote Source**: The theme's core files are fetched directly from GitHub (`mmistakes/minimal-mistakes`).
 *   **Local Overrides**: Any file you place in your local project directory (like `_sass`, `_includes`, or `_layouts`) will **automatically override** the equivalent file in the remote theme. This allows for deep customization without modifying the original theme.
-*   **Updating**: Since the site uses `remote_theme`, it automatically pulls the latest version. To update the underlying Jekyll engines and plugins, run `bundle update`.
+*   **Updating**: Since the site uses `remote_theme`, it automatically pulls the latest version. To update the underlying Jekyll engines and plugins, run `make update` and review the changes to `Gemfile.lock`.
 *   **Configuration**: Most theme-specific settings (skins, navigation, author info) are controlled via `_config.yml`.
 
 ## Deployment
