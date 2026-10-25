@@ -1,13 +1,10 @@
-.PHONY: help setup build serve serve-future preview clean update post require-mise
-
-BUNDLER_VERSION := $(shell awk '/^BUNDLED WITH$$/ { getline; print $$1 }' Gemfile.lock)
-BUNDLE = mise exec -- bundle _$(BUNDLER_VERSION)_
+.PHONY: help setup build serve serve-future preview clean update post
 
 # Default target
 help:
 	@echo "Available commands:"
-	@echo "  make setup    - Install pinned Ruby, Bundler, and project gems locally"
-	@echo "  make update   - Update gems and Gemfile.lock"
+	@echo "  make setup    - Install dependencies (gems) locally"
+	@echo "  make update   - Remove local theme overrides and update gems"
 	@echo "  make serve    - Serve the site locally at http://localhost:4000"
 	@echo "  make serve-future - Serve the site locally including future posts"
 	@echo "  make preview  - Alias for 'serve'"
@@ -15,31 +12,24 @@ help:
 	@echo "  make clean    - Remove the generated ./_site directory"
 	@echo "  make post     - Create a new blog post (usage: make post TITLE='My New Post')"
 
-require-mise:
-	@command -v mise >/dev/null 2>&1 || { echo "mise is required. Install it: https://mise.jdx.dev/installing-mise.html"; exit 1; }
-
-setup update build serve serve-future: require-mise
-
 setup:
 	@echo "Installing dependencies..."
-	mise install ruby
-	mise exec -- gem install bundler --version $(BUNDLER_VERSION) --no-document
-	$(BUNDLE) config set --local path vendor/bundle
-	$(BUNDLE) install
+	bundle install
 
 update:
+	@echo "Removing local theme overrides..."
 	@echo "Updating gems..."
-	$(BUNDLE) update
+	bundle update
 
 build:
-	$(BUNDLE) exec jekyll build
+	bundle exec jekyll build
 
 serve:
-	$(BUNDLE) exec jekyll serve
+	bundle exec jekyll serve
 
 # Jekyll hides future-dated posts by default. Use this to preview them.
 serve-future:
-	$(BUNDLE) exec jekyll serve --future
+	bundle exec jekyll serve --future
 
 preview: serve
 
