@@ -137,6 +137,11 @@ include:
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
+  - AGENTS.md
+  - banner.js
+  - Makefile
+  - staticman.yml
+  - ToDo.md
   - vendor
   - .asset-cache
   - .bundle
@@ -157,6 +162,7 @@ exclude:
   - node_modules
   - package.json
   - package-lock.json
+  - private
   - Rakefile
   - README
   - tmp
@@ -190,11 +196,11 @@ kramdown:
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  quiet_deps: true # silence deprecations inside remote-theme partials
+  silence_deprecations: [import] # Minimal Mistakes' main.scss still relies on @import
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 # Plugins (previously gems:)

@@ -21,4 +21,5 @@
 ## Generated And Local Files
 
 - `_site/`, `.jekyll-cache/`, `.bundle/`, `vendor/bundle/`, `.env`, and `private/` are gitignored local artifacts. Do not edit `_site/` as source. `mise.toml` pins Ruby and the tracked `Gemfile.lock` pins gems and Bundler.
-- Gitignored does not mean excluded from Jekyll: `_config.yml` does not exclude `private/`, so files there become build inputs. Existing remote-theme temp copies under `private/` produce duplicate-page warnings during `make build`.
+- Gitignored does not mean excluded from Jekyll: anything not listed under `exclude` in `_config.yml` becomes a build input. `private/` is excluded because remote-theme temp copies have landed there before and cause duplicate-page conflicts and extra Sass compiles. Repo tooling files (`AGENTS.md`, `Makefile`, `ToDo.md`, etc.) are excluded so they are not published.
+- `make build` should produce no warnings. Theme Sass deprecations are silenced via `sass.quiet_deps` and `sass.silence_deprecations` in `_config.yml`; a new warning usually points to a real problem.
