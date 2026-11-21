@@ -31,3 +31,9 @@ playwright-report/
 
 # ToDo
 ToDo.md
+
+# Python / uv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
