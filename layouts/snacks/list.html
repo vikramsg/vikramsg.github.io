@@ -1,0 +1,43 @@
+{{- /* Snacks are short, so the listing shows each one in full instead of a summary. */ -}}
+{{- define "main" }}
+<header class="page-header">
+  <h1>
+    {{ .Title }}
+    {{- with .OutputFormats.Get "rss" }}
+    <a href="{{ .RelPermalink }}" title="RSS" aria-label="RSS">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" height="23">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    </a>
+    {{- end }}
+  </h1>
+  {{- with .Description }}
+  <div class="post-description">{{ . | markdownify }}</div>
+  {{- end }}
+</header>
+
+{{- $paginator := .Paginate .RegularPages }}
+{{- range $paginator.Pages }}
+<article class="post-single snack">
+  <header class="post-header">
+    <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <div class="post-meta">{{ partial "post_meta.html" . }}</div>
+  </header>
+  <div class="post-content md-content">{{ .Content }}</div>
+</article>
+{{- else }}
+<p>No snacks yet.</p>
+{{- end }}
+
+{{- if gt $paginator.TotalPages 1 }}
+<footer class="page-footer">
+  <nav class="pagination">
+    {{- with $paginator.Prev }}<a class="prev" href="{{ .URL }}">«&nbsp;{{ i18n "prev_page" }}</a>{{ end }}
+    {{- with $paginator.Next }}<a class="next" href="{{ .URL }}">{{ i18n "next_page" }}&nbsp;»</a>{{ end }}
+  </nav>
+</footer>
+{{- end }}
+{{- end }}

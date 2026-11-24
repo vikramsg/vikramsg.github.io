@@ -2,24 +2,23 @@
 
 ## Commands
 
-- Install mise, run `mise trust` once in the repository, then `make setup` to install pinned Ruby, the lockfile's Bundler, and local gems. Run `make serve` for `http://localhost:4000`; Make uses `mise exec` without requiring shell activation.
-- Use `make serve-future` when a future-dated post must appear locally; normal Jekyll serving hides it.
-- Run `make build` as the repository's verification step. There are no test, lint, or typecheck suites.
-- Restart Jekyll after editing `_config.yml`; Jekyll does not reload that file while serving.
-- Do not use `rake preview`: its task targets a missing `test/` tree. The Makefile's `preview` target is the valid alias for `make serve`.
-- Do not treat `.travis.yml` as current CI: it targets a missing `docs/` tree and Ruby 2.4. There are no GitHub Actions workflows.
-- `make update` runs Bundler through mise and updates gems and `Gemfile.lock`; it does not remove local theme overrides.
-- `package.json` is only for the checked-in theme JavaScript bundle. After editing JavaScript sources, run `npm run build:js` to regenerate `assets/js/main.min.js`.
+- Install mise, run `mise trust` once in the repository, then `make setup` to install pinned Hugo and Node, the PaperMod submodule, and Playwright. Run `make serve` for `http://localhost:1313`; Make uses `mise exec` without requiring shell activation.
+- Use `make serve-future` when a future-dated post must appear locally; Hugo hides it otherwise.
+- Run `make build` and `make test` as the verification steps. `make build` should produce no warnings. `make test` runs the Playwright suite in `tests/` against `hugo server`; it checks every page in the sitemap plus legacy Jekyll URLs, so add an assertion there when adding a feature.
+- Do not use a bare `hugo` if mise is not activated; use `mise exec -- hugo` so the version pinned in `mise.toml` is used.
+- `package.json` exists only for Playwright. The site has no Node build.
 
 ## Site Structure
 
-- This is one root Jekyll site, not a Node application or monorepo. Site configuration is `_config.yml`; current content lives in `index.md`, `_pages/`, and `_posts/`.
-- The site loads Minimal Mistakes through `remote_theme`, but checked-in `_layouts/` and `_includes/` files override matching remote-theme files. Check both the local override and theme behavior before changing layouts.
-- `_pages/blog.md` and `_pages/cv.md` define case-sensitive `/Blog/` and `/CV/` permalinks; `_data/navigation.yml` must keep matching URLs.
-- Create posts with `make post TITLE="Post Name"`. Cross-post links should use Jekyll's `{% post_url filename-without-extension %}` tag so permalink changes do not break them.
+- This is one Hugo site. Configuration is `hugo.yaml`; content lives in `content/`.
+- The theme is PaperMod, a git submodule at `themes/PaperMod` pinned to a commit. Never edit it. Files in `layouts/` override the theme's files at the same path; check both before changing templates.
+- `/Blog/` and `/CV/` are case-sensitive URLs set with `url:` in `content/blog.md` and `content/cv.md`. Menu entries in `hugo.yaml` use `pageRef`, because Hugo lowercases menu `url` values.
+- Posts migrated from Jekyll set `url:` to their old addresses; `tests/site.spec.ts` lists those URLs. Don't change them. New posts get `/<slug>/` from the filename.
+- Create posts with `make post TITLE="Post Name"` and snacks (short notes) with `make snack TITLE="Note"`. Link between posts with `{{< ref "filename-without-extension" >}}`.
+- Snacks live in `content/snacks/`. They are excluded from the home page, `/Blog/` and `/feed.xml` (`mainSections: [posts]` and `layouts/home.rss.xml`), and have their own feed at `/snacks/feed.xml`.
+- Math: inline `\(...\)`, display `$$` on their own lines; rendered at build time by `layouts/_markup/render-passthrough.html`. Mermaid: fenced `mermaid` code blocks. The KaTeX stylesheet and Mermaid script are only loaded on pages that use them (`layouts/_partials/extend_head.html`).
 
 ## Generated And Local Files
 
-- `_site/`, `.jekyll-cache/`, `.bundle/`, `vendor/bundle/`, `.env`, and `private/` are gitignored local artifacts. Do not edit `_site/` as source. `mise.toml` pins Ruby and the tracked `Gemfile.lock` pins gems and Bundler.
-- Gitignored does not mean excluded from Jekyll: anything not listed under `exclude` in `_config.yml` becomes a build input. `private/` is excluded because remote-theme temp copies have landed there before and cause duplicate-page conflicts and extra Sass compiles. Repo tooling files (`AGENTS.md`, `Makefile`, `ToDo.md`, etc.) are excluded so they are not published.
-- `make build` should produce no warnings. Theme Sass deprecations are silenced via `sass.quiet_deps` and `sass.silence_deprecations` in `_config.yml`; a new warning usually points to a real problem.
+- `public/`, `resources/`, `.hugo_build.lock`, `node_modules/`, `test-results/`, `playwright-report/`, `.env`, and `.agents/` are gitignored. Do not edit `public/` as source.
+- Hugo builds only from `content/`, `layouts/`, `static/`, `assets/`, `data/`, `i18n/` and the theme, so repo tooling files at the root are never published.

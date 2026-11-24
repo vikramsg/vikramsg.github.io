@@ -1,21 +1,19 @@
 # GitHub Blog
 
-This is my personal website built with Jekyll and the "Minimal Mistakes" theme, hosted on GitHub Pages.
+This is my personal website built with [Hugo](https://gohugo.io/) and the [PaperMod](https://github.com/adityatelange/hugo-PaperMod) theme, hosted on GitHub Pages.
 The site is hosted at [https://vikramsg.github.io](https://vikramsg.github.io).
 
 ## Setup
 
 ### 1. Install mise
 
-[mise](https://mise.jdx.dev/) manages the Ruby version pinned in `mise.toml`. On macOS or Linux, install its official prebuilt executable:
+[mise](https://mise.jdx.dev/) manages the Hugo and Node versions pinned in `mise.toml`. On macOS or Linux, install its official prebuilt executable:
 
 ```bash
 curl -fsSL https://mise.run | sh
 ```
 
 The installer writes `~/.local/bin/mise` without changing your shell configuration. That directory must be on `PATH`; if needed, run `export PATH="$HOME/.local/bin:$PATH"` for the current terminal session. See mise's [installation instructions](https://mise.jdx.dev/installing-mise.html) for other methods.
-
-On macOS, Ruby gems with native extensions require Apple's Command Line Tools. If they are not already installed, run `xcode-select --install`. On Linux, install your platform's Ruby build dependencies.
 
 ### 2. Install project dependencies
 
@@ -26,75 +24,91 @@ mise trust
 make setup
 ```
 
-Setup installs the pinned Ruby, the Bundler version recorded in `Gemfile.lock`, and the locked project gems into `vendor/bundle`. Commit `Gemfile.lock` when dependencies change so other machines use the same gem and Bundler versions.
-
-Make runs Ruby commands through `mise exec`, so no mise shell activation, Homebrew Ruby installation, or Ruby PATH edits are needed. For direct Ruby commands, use `mise exec -- ruby --version` or `mise exec -- bundle exec jekyll build`. Plain `ruby` or `bundle` can still select macOS's system Ruby if mise is not activated in your shell.
+Setup installs the pinned Hugo and Node, checks out the PaperMod theme submodule, and installs Playwright and Chromium for `make test`.
+If you cloned without `--recurse-submodules`, setup fetches the theme for you.
 
 ## Running the Blog Locally
-
-To preview the website on your local machine, use the provided Makefile command:
 
 ```bash
 make serve
 ```
 
-Once the server is running, you can view your website by navigating to `http://localhost:4000/` in your web browser.
+Then open `http://localhost:1313/`. Hugo reloads the page as you edit, including `hugo.yaml`.
 
 ## Makefile Commands
 
-The project includes a `Makefile` to automate common tasks:
-*   `make setup`: Installs pinned Ruby, the lockfile's Bundler, and project gems locally.
-*   `make update`: Updates gems and `Gemfile.lock`; it does not remove local theme overrides.
-*   `make serve`: Runs the Jekyll server with auto-regeneration.
+*   `make setup`: Installs pinned tools, the theme submodule, and test dependencies.
+*   `make serve`: Runs the Hugo server with live reload.
 *   `make serve-future`: Includes future-dated posts when serving locally.
 *   `make preview`: Alias for `make serve`.
-*   `make build`: Builds the static site to the `_site` folder.
-*   `make post TITLE="Post Name"`: Scaffolds a new blog post with the correct date and front matter.
-*   `make clean`: Removes the generated site files.
+*   `make build`: Builds the static site to `public/`.
+*   `make test`: Opens every page in Chromium with Playwright and checks links, math, diagrams, feeds and search.
+*   `make post TITLE="Post Name"`: Creates a new blog post.
+*   `make snack TITLE="Note Name"`: Creates a new snack (short note).
+*   `make clean`: Removes generated files.
 
-## Writing New Blog Posts
+## Writing
 
-1.  **Create a new file**: Use the Makefile to generate a template:
-    ```bash
-    make post TITLE="Your Post Title"
-    ```
-    This creates a file in `_posts/` with the naming convention `YYYY-MM-DD-your-post-title.md`.
+### Posts
 
-2.  **Front Matter**: The generated file will include the necessary metadata:
-    ```yaml
-    ---
-    layout: single
-    title:  "Your Post Title"
-    date:   YYYY-MM-DD
-    ---
-    ```
+```bash
+make post TITLE="Your Post Title"
+```
 
-3.  **Write your content**: Write your blog post content below the front matter using Markdown.
+This creates `content/posts/YYYY-MM-DD-your-post-title.md`, published at `/your-post-title/`:
+
+```yaml
+---
+title: "Your Post Title"
+date: YYYY-MM-DD
+---
+```
+
+Posts migrated from Jekyll set `url:` in their front matter to keep their original addresses. Don't change those.
+
+### Snacks
+
+Snacks are short notes: a link, a tip, something learned. They have their own page at `/snacks/`, which shows every snack in full, and their own feed at `/snacks/feed.xml`. They don't appear on the home page, in `/Blog/`, or in the main feed.
+
+```bash
+make snack TITLE="Your Note"
+```
+
+This creates `content/snacks/YYYY-MM-DD-your-note.md`, published at `/snacks/your-note/`.
+
+### Math and diagrams
+
+*   Inline math: `\(E = mc^2\)`. Display math: `$$` on its own line before and after the equation. Math is rendered to HTML at build time with KaTeX.
+*   Diagrams: a fenced code block with the `mermaid` language.
 
 ## What is Where
 
-*   **Home Page**: The content of the home page (the "About Me" section) can be edited in `index.md` in the root directory.
-*   **Navigation Tabs**: To add, remove, or edit the navigation tabs (e.g., "Blog"), modify the `_data/navigation.yml` file.
-*   **Blog Page**: The page that lists all the blog posts is located at `_pages/blog.md`.
-*   **Author Profile**: The author profile information (displayed on the left side) is configured in the `_config.yml` file.
-*   **Newsletter Signup**: The newsletter signup form is located in `_data/signup.html`.
-*   **Page Layouts**: The general page layouts are defined in the `_layouts` directory.
+*   **Site configuration**: `hugo.yaml` (title, menu, home page intro, social links, theme options).
+*   **Home page**: the intro text is `params.homeInfoParams` in `hugo.yaml`; the post list below it is automatic.
+*   **About page**: `content/about.md`.
+*   **CV**: `content/cv.md` (served at `/CV/`).
+*   **Blog archive**: `content/blog.md` (served at `/Blog/`).
+*   **Theme**: `themes/PaperMod` is a git submodule pinned to a commit. Don't edit it; override files in `layouts/` instead.
+*   **Local overrides** in `layouts/`:
+    *   `_partials/extend_head.html`: KaTeX stylesheet, Mermaid, and Umami analytics (production only).
+    *   `_markup/render-passthrough.html`: renders math with KaTeX.
+    *   `_markup/render-codeblock-mermaid.html`: renders `mermaid` code blocks.
+    *   `snacks/list.html`: the snacks page.
+    *   `home.rss.xml`: keeps snacks out of the main feed.
+    *   `_shortcodes/social_icons.html`: social links on the About page.
+*   **Browser tests**: `tests/site.spec.ts`.
 
-## How the Theme Works
+## Updating the Theme
 
-This site uses the **Minimal Mistakes** theme via the `remote_theme` method.
+```bash
+git -C themes/PaperMod fetch
+git -C themes/PaperMod checkout <commit-or-tag>
+make build && make test
+git add themes/PaperMod
+```
 
-*   **Remote Source**: The theme's core files are fetched directly from GitHub (`mmistakes/minimal-mistakes`).
-*   **Local Overrides**: Any file you place in your local project directory (like `_sass`, `_includes`, or `_layouts`) will **automatically override** the equivalent file in the remote theme. This allows for deep customization without modifying the original theme.
-*   **Updating**: Since the site uses `remote_theme`, it automatically pulls the latest version. To update the underlying Jekyll engines and plugins, run `make update` and review the changes to `Gemfile.lock`.
-*   **Configuration**: Most theme-specific settings (skins, navigation, author info) are controlled via `_config.yml`.
+Check PaperMod's `theme.toml` for the minimum Hugo version and bump `mise.toml` if needed. `layouts/home.rss.xml` is a copy of PaperMod's `rss.xml` with one change; re-copy it if the theme's feed template changes.
 
 ## Deployment
 
-This blog is hosted on GitHub Pages. To deploy any changes, commit them and push to the `main` branch.
-
-```bash
-git add .
-git commit -m "Your commit message"
-git push
-```
+`.github/workflows/hugo.yml` builds the site and deploys it to GitHub Pages on every push to `main`. The repository's **Settings → Pages → Source** must be set to **GitHub Actions**.

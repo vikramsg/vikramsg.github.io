@@ -1,0 +1,10 @@
+{{- /* Renders $$...$$ and \(...\) math to KaTeX HTML at build time; no client-side math JS. */ -}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") }}
+{{- with try (transform.ToMath .Inner $opts) }}
+  {{- with .Err }}
+    {{- errorf "Unable to render math %q in %s: %s" $.Inner $.Page.File.Path . }}
+  {{- else }}
+    {{- .Value }}
+    {{- $.Page.Store.Set "hasMath" true }}
+  {{- end }}
+{{- end -}}

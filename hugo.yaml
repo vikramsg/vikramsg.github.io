@@ -1,0 +1,93 @@
+baseURL: https://vikramsg.github.io/
+locale: en-US
+title: Finite Simulations
+theme: PaperMod
+
+enableRobotsTXT: true
+timeZone: Europe/Berlin # dates without a time are midnight in Hamburg, not UTC
+
+# No posts use tags or categories; /Blog/ is the archive.
+disableKinds: [taxonomy, term]
+
+# New posts/snacks are named YYYY-MM-DD-slug.md; take the date and slug from the filename.
+# Migrated posts set `url:` explicitly to keep their old Jekyll URLs.
+frontmatter:
+  date: [":filename", ":default"]
+permalinks:
+  page:
+    posts: /:slug/
+    snacks: /snacks/:slug/
+pagination:
+  pagerSize: 10
+
+# Jekyll served the main feed at /feed.xml; keep that URL for existing subscribers.
+outputFormats:
+  RSS:
+    baseName: feed
+
+outputs:
+  home: [HTML, RSS, JSON] # JSON is the search index
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true # posts contain raw HTML such as <br/>
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          # $$...$$ is display math; inline math is \(...\). Migrated posts used Kramdown's
+          # inline $$...$$, which was rewritten to \(...\).
+          block:
+            - ["$$", "$$"]
+            - ["\\[", "\\]"]
+          inline:
+            - ["\\(", "\\)"]
+
+menu:
+  # pageRef, not url: Hugo lowercases menu urls, which breaks /Blog/ and /CV/.
+  main:
+    - name: Blog
+      pageRef: /blog
+      weight: 1
+    - name: Snacks
+      pageRef: /snacks
+      weight: 2
+    - name: About
+      pageRef: /about
+      weight: 3
+    - name: CV
+      pageRef: /cv
+      weight: 4
+    - name: Search
+      pageRef: /search
+      weight: 5
+
+params:
+  description: Vikram Singh's blog on software, data and computational physics.
+  author: Vikram Singh
+  mainSections: [posts]
+  defaultTheme: auto
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+
+  homeInfoParams:
+    Title: Vikram Singh
+    Content: >-
+      Senior Data Engineer at [Orbio](https://www.orbio.earth/), working on methane predictions.
+      Previously computational physics: ocean models at the Max Planck Institute for Meteorology
+      and a PhD on high-order CFD at Technion. [More about me](/about/).
+
+  socialIcons:
+    - name: github
+      url: https://github.com/vikramsg
+    - name: linkedin
+      url: https://www.linkedin.com/in/vikram-singh-phd/
+    - name: twitter
+      url: https://twitter.com/WhinerVikram
+
+  fuseOpts:
+    keys: [title, permalink, summary, content]
