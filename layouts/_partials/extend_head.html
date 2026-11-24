@@ -1,0 +1,27 @@
+{{- /* Math and mermaid render hooks flag the page they ran on. The snacks listing shows
+       each snack's full content, so it needs the assets of every snack it lists.
+       Calling .Content renders the snack now, before <head> is written. */ -}}
+{{- $hasMath := .Store.Get "hasMath" }}
+{{- $hasMermaid := .Store.Get "hasMermaid" }}
+{{- if and (eq .Kind "section") (eq .Section "snacks") }}
+  {{- range .RegularPages }}
+    {{- $_ := .Content }}
+    {{- if .Store.Get "hasMath" }}{{ $hasMath = true }}{{ end }}
+    {{- if .Store.Get "hasMermaid" }}{{ $hasMermaid = true }}{{ end }}
+  {{- end }}
+{{- end }}
+
+{{- if $hasMath }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.4/dist/katex.min.css" integrity="sha384-u1zONI5gPXUx0UKI62c75/zww972y0v2rSK5ZYlVdS6xEuWDeZWUI66v6t1gvlXJ" crossorigin="anonymous">
+{{- end }}
+{{- if $hasMermaid }}
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@12.3.0/dist/mermaid.esm.min.mjs';
+  const dark = document.body.classList.contains('dark');
+  mermaid.initialize({ startOnLoad: true, theme: dark ? 'dark' : 'default' });
+</script>
+{{- end }}
+
+{{- if hugo.IsProduction }}
+<script async src="https://analytics.umami.is/script.js" data-website-id="ed972b6f-576d-472a-a0df-11b092bc40a0"></script>
+{{- end }}

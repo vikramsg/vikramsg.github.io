@@ -6,28 +6,22 @@
 *.sublime-project
 *.sublime-workspace
 
-# Ruby Gem
-*.gem
-.bundle
-**/vendor/bundle
-
 # Node.js and NPM
 node_modules
 npm-debug.log*
-package-lock.json
 codekit-config.json
 
 # macOS
 .DS_Store
 
-# Jekyll generated files
-.jekyll-cache
-.jekyll-metadata
-.sass-cache
-_asset_bundler_cache
-_site
-_site/*
-private
+# Hugo generated files
+public/
+resources/
+.hugo_build.lock
+
+# Playwright output
+test-results/
+playwright-report/
 
 # Env variables
 .env
