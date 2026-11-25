@@ -20,5 +20,6 @@
 
 ## Generated And Local Files
 
-- `public/`, `resources/`, `.hugo_build.lock`, `node_modules/`, `test-results/`, `playwright-report/`, `.env`, and `.agents/` are gitignored. Do not edit `public/` as source.
+- `public/`, `resources/`, `.hugo_build.lock`, `node_modules/`, `test-results/`, `playwright-report/`, and `.env` are gitignored. Do not edit `public/` as source.
+- `.agents/` is local except for the shared Pax skill at `.agents/skills/branch/SKILL.md`. Use `/branch merge` in Pax to publish a finished snack and watch the deploy. If the command isn't listed in an existing session, run `/reload` first.
 - Hugo builds only from `content/`, `layouts/`, `static/`, `assets/`, `data/`, `i18n/` and the theme, so repo tooling files at the root are never published.
