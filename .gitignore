@@ -26,8 +26,15 @@ playwright-report/
 # Env variables
 .env
 
-# Agents
+# Agents: keep local files ignored, except the shared branch skill
 .agents/
+!/.agents/
+/.agents/*
+!/.agents/skills/
+/.agents/skills/*
+!/.agents/skills/branch/
+/.agents/skills/branch/*
+!/.agents/skills/branch/SKILL.md
 
 # ToDo
 ToDo.md
