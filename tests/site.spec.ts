@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
@@ -209,6 +209,22 @@ test("snacks listing shows each snack in full", async ({ page, request }) => {
   for (const p of snackPaths) {
     const listed = page.locator("article.snack", { has: page.locator(`a[href$='${p}']`) });
     expect((await listed.locator(".post-content").innerText()).trim()).toBe(fullText[p]);
+  }
+  const dates = await page.locator("article.snack .post-meta span[title]").evaluateAll((spans) =>
+    spans.map((s) => Date.parse(s.getAttribute("title") ?? "")),
+  );
+  expect(dates).toEqual([...dates].sort((a, b) => b - a));
+});
+
+// hugo.yaml takes the date from the filename first, so a differing front-matter date is silently ignored.
+test("filename dates match front-matter dates", () => {
+  for (const dir of ["content/posts", "content/snacks"]) {
+    for (const name of readdirSync(dir)) {
+      const fileDate = name.match(/^(\d{4}-\d{2}-\d{2})-/)?.[1];
+      if (!fileDate) continue;
+      const frontMatterDate = readFileSync(path.join(dir, name), "utf8").match(/^date:\s*(\d{4}-\d{2}-\d{2})/m)?.[1];
+      expect(frontMatterDate ?? fileDate, `${dir}/${name}`).toBe(fileDate);
+    }
   }
 });
 
