@@ -18,10 +18,11 @@ The first argument must be `commit` or `merge`. If it is missing or unknown, rep
 
 ## Merge and deploy (`/branch merge` only)
 
-1. Verify the current commit matches the branch on `origin`. If there are no changes to merge into `main`, report that and stop. Unrelated local changes that were left out of the commit do not block the PR.
+1. Record the current branch name and commit, and verify that the commit matches the branch on `origin`. If there are no changes to merge into `main`, report that and stop. Unrelated local changes that were left out of the commit do not block the PR.
 2. Merge the pushed branch into `main`. Use its pull request targeting `main` if one exists, or open one if needed. Make sure the pull request is still at the verified commit before merging. Do not bypass required checks.
 3. Fetch `origin` and fast-forward local `main` to `origin/main` without discarding local commits or changes. Refresh `main` before waiting on deployment so it stays current even if the deploy fails.
 4. Monitor the `Deploy Hugo site to Pages` workflow for the commit that landed on `main`, not a run from the snack branch or an older deployment.
 5. Only after a successful deploy, switch this worktree to a new branch from `origin/main`. Use the next unused `b<number>` name (for example, `b6` after `b5`), checking both local and remote branches. Use a normal, non-forced switch so unrelated local changes are preserved. If Git refuses the switch because of local changes, report that and leave them untouched.
+6. After the switch succeeds, delete only the old local branch. Confirm it still points to the exact head of the merged PR, the PR's merge commit is on `origin/main`, and the old branch isn't checked out in another worktree. Try `git branch -d -- <old-branch>` first. A squash merge can leave the PR head outside `main`'s history; if Git refuses for that reason alone, use `git branch -D -- <old-branch>` only with those same checks still satisfied. If any check fails, leave the branch in place and report why. Do not delete the remote branch or any other local branch.
 
 If any step fails or is blocked, report what happened and stop. Do not switch to a new branch after a failed or unverified deployment.
