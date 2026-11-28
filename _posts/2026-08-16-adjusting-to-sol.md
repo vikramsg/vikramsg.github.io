@@ -4,6 +4,21 @@ title: "Adjusting to Sol"
 date: 2026-08-16
 ---
 
+
+### GPT 5.3 Codex
+
+## Notes
+
+1 year ago I was all in into [devcontainers](https://github.com/vikramsg/Experiments/pull/19/changes) because I did not trust coding agents would not just delete stuff wholesale.
+
+1. Date when I changed my OpenCode setup 
+    - Mar 8 when I added 5.3 Codex and 5.4, probably used Codex sub diretly until then
+    - Apr 28 added GPT 5.5
+    - July 10 added GPT 5.6
+    - Sep 5 added GPT 6
+
+### Old
+
 I have been working only with GPT models since about January.
 I actually made the choice because of subscriptions available at day job, so not necessarily a 1-1 comparison before deciding.
 
@@ -50,17 +65,13 @@ I had to almost push it to do simple things which needed no extra instructions w
 I also used to go back and forth between the Gemini CLI and OpenCode thinking it maybe a harness issue.
 Turns out Gemini behaved better in OpenCode, but it was never really good enough.
 
-### GPT 5.3 Codex
-
-Frustrated with lack of development
-
-## Notes
-
-1 year ago I was all in into [devcontainers](https://github.com/vikramsg/Experiments/pull/19/changes) because I did not trust coding agents would not just delete stuff wholesale.
-
 ## ToDo - Research
 
 1. Dates when Sol was released
-2. Date when I changed my OpenCode setup
+2. Date when I changed my OpenCode setup 
+    - Mar 8 when I added 5.3 Codex and 5.4, probably used Codex sub diretly until then
+    - Apr 28 added GPT 5.5
+    - July 10 added GPT 5.6
+    - Sep 5 added GPT 6
 3. All OpenCode setup changes I have done since Sol
 
