@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b4532a'/><path d='M16 6 C21 12 21 18 16 24 C11 18 11 12 16 6 Z' fill='none' stroke='%23faf6ef' stroke-width='2.4'/><path d='M16 24 L12 28 M16 24 L20 28' stroke='%23faf6ef' stroke-width='2.4' stroke-linecap='round'/></svg>">
+  <title>01 · How Writing Systems Work (and Where Harappa Fits)</title>
+  <style>
+    :root {
+      --bg: #faf6ef;
+      --card: #fffdf9;
+      --surface: #f4ede1;
+      --ink: #1f1c18;
+      --muted: #625a50;
+      --accent: #b4532a;
+      --accent-dark: #8e3e1d;
+      --accent-soft: #f6e4da;
+      --teal: #25636b;
+      --teal-soft: #e0f0f1;
+      --gold: #a16e16;
+      --gold-soft: #f7ecd2;
+      --border: #e4dbcd;
+      --ok: #256f46;
+      --ok-soft: #e2f4ea;
+      --warn: #9f3030;
+      --warn-soft: #fbe8e8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top chrome */
+    header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .crumb {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .crumb:hover { color: var(--accent); }
+
+    .step-counter {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .progress-track {
+      height: 3px;
+      background: var(--border);
+      width: 100%;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 14.28%;
+      transition: width 0.25s ease;
+    }
+
+    /* Step pills */
+    .step-nav {
+      max-width: 920px;
+      margin: 1rem auto 0;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+    .pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Main stage */
+    main {
+      flex: 1;
+      max-width: 920px;
+      width: 100%;
+      margin: 1.25rem auto 2rem;
+      padding: 0 1.5rem;
+    }
+
+    .step {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2rem 2.25rem;
+      box-shadow: 0 10px 30px rgba(31, 28, 24, 0.04);
+      animation: fadeIn 0.2s ease;
+    }
+    .step.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .tag {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+    }
+    .tag.teal { background: var(--teal-soft); color: var(--teal); }
+    .tag.gold { background: var(--gold-soft); color: var(--gold); }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.85rem;
+      line-height: 1.25;
+      margin: 0 0 0.6rem;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.02rem;
+      margin: 0 0 1.5rem;
+      max-width: 68ch;
+    }
+
+    .playground {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .pg-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 0 0 0.9rem;
+    }
+
+    /* Buttons & toggles */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 0.95rem;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { border-color: var(--accent); }
+    .btn.selected {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+    .btn.accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn.accent:hover { background: var(--accent-dark); }
+
+    /* Two-column compare */
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .panel h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1.05rem;
+    }
+    .panel .sub {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .big-display {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .caption {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    /* Interactive tiles */
+    .tile-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .tile {
+      min-width: 68px;
+      padding: 0.75rem 0.9rem;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .tile:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .tile.selected { border-color: var(--accent); background: var(--accent-soft); }
+    .tile.vowel { border-color: #9dc5c9; }
+    .tile.vowel.selected { border-color: var(--teal); background: var(--teal-soft); }
+    .tile .glyph {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .tile .role {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .detail-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.95rem;
+    }
+    .detail-box.teal { border-left-color: var(--teal); }
+
+    /* Takeaway callout */
+    .takeaway {
+      background: var(--accent-soft);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-size: 0.95rem;
+    }
+    .takeaway strong { color: var(--accent-dark); }
+
+    /* Abjad sentence box */
+    .sentence-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+
+    /* Abugida display */
+    .abugida-stage {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .abugida-glyph {
+      font-size: 4rem;
+      line-height: 1.1;
+      min-width: 110px;
+      text-align: center;
+      color: var(--accent-dark);
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+    }
+
+    /* Syllabary builder */
+    .word-slot {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      min-height: 62px;
+      padding: 0.75rem 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 0.9rem;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      background: var(--teal-soft);
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .chip small {
+      font-size: 0.78rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      opacity: 0.85;
+    }
+
+    /* Rebus stage */
+    .rebus-eq {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 0.9rem;
+    }
+    .rebus-box {
+      text-align: center;
+      padding: 0.65rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      min-width: 115px;
+    }
+    .rebus-box .sym { font-size: 2.2rem; display: block; line-height: 1.2; }
+    .rebus-box .lbl { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+    .rebus-op { font-size: 1.4rem; font-weight: 700; color: var(--muted); }
+
+    /* Sign-count ruler */
+    .ruler-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .ruler-track {
+      position: relative;
+      height: 54px;
+      background: linear-gradient(90deg, #e5efe9 0%, #e5efe9 35%, #e2eff3 35%, #e2eff3 58%, #f7e6dc 58%, #f7e6dc 100%);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 0.75rem 0 1.4rem;
+    }
+    .ruler-marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      padding: 0.22rem 0.5rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .ruler-marker:hover,
+    .ruler-marker.selected {
+      background: var(--ink);
+      color: #fff;
+      transform: translate(-50%, -50%) scale(1.06);
+      z-index: 5;
+    }
+    .ruler-marker.indus {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+    .ruler-marker.indus.selected {
+      background: var(--accent-dark);
+      border-color: var(--ink);
+    }
+    .ruler-scale {
+      display: flex;
+      justify-content: space-between;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    /* Seal inspector */
+    .seal-layout {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .seal-svg-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem;
+      text-align: center;
+    }
+    .seal-sign {
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .seal-sign:hover rect.hit,
+    .seal-sign.selected rect.hit {
+      fill: rgba(180, 83, 42, 0.22);
+      stroke: #b4532a;
+      stroke-width: 1.5;
+    }
+
+    /* Quiz */
+    .quiz-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 0.8rem;
+    }
+    .quiz-q {
+      font-weight: 600;
+      margin: 0 0 0.65rem;
+      font-size: 0.95rem;
+    }
+    .quiz-opts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .quiz-btn {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--ink);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .quiz-btn:hover { border-color: var(--accent); }
+    .quiz-btn.correct { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+    .quiz-btn.wrong { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
+    .quiz-feedback {
+      margin-top: 0.55rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    /* Bottom controls */
+    footer {
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto 2.5rem;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.7rem 1.35rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .nav-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .nav-btn.primary:hover:not(:disabled) { background: var(--accent-dark); color: #fff; }
+    .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .kbd-hint {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .step { padding: 1.35rem 1.25rem; }
+      .split-grid, .seal-layout { grid-template-columns: 1fr; }
+      .kbd-hint { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a class="crumb" href="index.html">← Harappan Research Notes</a>
+      <span class="step-counter" id="stepCounter">Step 1 of 7</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </header>
+
+  <nav class="step-nav" id="stepNav" aria-label="Walkthrough steps">
+    <button class="pill active" data-step="0">1. Big Split</button>
+    <button class="pill" data-step="1">2. Alphabet</button>
+    <button class="pill" data-step="2">3. Abjad</button>
+    <button class="pill" data-step="3">4. Abugida</button>
+    <button class="pill" data-step="4">5. Syllabary</button>
+    <button class="pill" data-step="5">6. Logo-syllabic &amp; Rebus</button>
+    <button class="pill" data-step="6">7. Harappan Puzzle</button>
+  </nav>
+
+  <main>
+    <!-- STEP 1: THE BIG SPLIT -->
+    <section class="step active" id="step-0">
+      <div class="badge-row">
+        <span class="tag">Step 1 · Foundation</span>
+      </div>
+      <h1>The Big Split: Spoken Language vs. Direct Meaning</h1>
+      <p class="lead">Before trying to translate Harappan signs, we have to ask whether they encode <strong>spoken words</strong> at all—or whether they work like road signs and clan badges.</p>
+
+      <div class="playground">
+        <div class="pg-label">Try it · Switch the reader's spoken language</div>
+        <div class="btn-group" id="langSwitch">
+          <button class="btn selected" data-lang="en">English</button>
+          <button class="btn" data-lang="hi">Hindi</button>
+          <button class="btn" data-lang="ja">Japanese</button>
+        </div>
+
+        <div class="split-grid">
+          <div class="panel">
+            <h3>Glottographic</h3>
+            <p class="sub">Encodes a <strong>specific spoken language</strong></p>
+            <div class="big-display" id="glottoDisplay">DO NOT ENTER</div>
+            <p class="caption" id="glottoCaption">Tied to English words. Change the language and the marks must completely change.</p>
+          </div>
+
+          <div class="panel">
+            <h3>Semasiographic</h3>
+            <p class="sub">Encodes <strong>meaning directly</strong>, no language required</p>
+            <div class="big-display">
+              <svg width="64" height="64" viewBox="0 0 64 64" aria-label="No entry sign">
+                <circle cx="32" cy="32" r="28" fill="#c0392b"/>
+                <rect x="13" y="26" width="38" height="12" rx="3" fill="#ffffff"/>
+              </svg>
+            </div>
+            <p class="caption" id="semasioCaption">Never changes. English, Hindi, and Japanese readers all get the same meaning without speaking the same sentence.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <strong>Why this matters for Harappa:</strong> Skeptics (Farmer, Sproat, Witzel) argue Indus seals are <em>semasiographic</em>—clan, god, or trade badges. Traditional scholars (Parpola, Mahadevan, Rao) argue they're <em>glottographic</em>. Next, let's see what glottographic scripts look like.
+      </div>
+    </section>
+
+    <!-- STEP 2: ALPHABET -->
+    <section class="step" id="step-1">
+      <div class="badge-row">
+        <span class="tag">Step 2 · Glottographic</span>
+        <span class="tag teal">~20–40 signs</span>
+      </div>
+      <h1>Alphabet: Every Sound Gets Its Own Sign</h1>
+      <p class="lead">Alphabets break spoken words down into individual <strong>consonants</strong> and <strong>vowels</strong>. Because human languages only use a few dozen basic sounds, alphabets stay tiny.</p>
+
+      <div class="playground">
+        <div class="pg-label">Click any letter tile to inspect what it encodes</div>
+        <div class="btn-group" id="alphaWordSwitch">
+          <button class="btn selected" data-word="en">English: FISH</button>
+          <button class="btn" data-word="gr">Greek: ΙΧΘΥΣ (fish)</button>
+        </div>
+
+        <div class="tile-row" id="alphaTiles"></div>
+        <div class="detail-box" id="alphaDetail"></div>
+      </div>
+
+      <div class="takeaway">
+        <strong>Sign-count clue:</strong> An alphabet almost never exceeds ~40 signs. Since the Harappan script has <strong>~400+ distinct signs</strong>, virtually nobody thinks Harappan is an alphabet.
+      </div>
+    </section>
+
+    <!-- STEP 3: ABJAD -->
+    <section class="step" id="step-2">
+      <div class="badge-row">
+        <span class="tag">Step 3 · Glottographic</span>
+        <span class="tag teal">~20–30 signs</span>
+      </div>
+      <h1>Abjad: Drop the Vowels, Keep the Consonants</h1>
+      <p class="lead">Ancient Phoenician, Hebrew, and Arabic skip most vowels in everyday writing. Your brain fills them in automatically from context.</p>
+
+      <div class="playground">
+        <div class="pg-label">1 · Feel how an Abjad works in English</div>
+        <div class="sentence-box" id="abjadSentence">THE KING SAW THE FISH IN THE RIVER</div>
+        <div class="btn-group">
+          <button class="btn accent" id="vowelToggleBtn">Strip the vowels</button>
+        </div>
+
+        <div class="pg-label" style="margin-top: 1.25rem;">2 · Real Arabic root: <span style="font-size:1.1rem;">ك ت ب</span> (k - t - b = "writing")</div>
+        <div class="btn-group" id="arabicRoots">
+          <button class="btn selected" data-root="kataba">kataba</button>
+          <button class="btn" data-root="kutub">kutub</button>
+          <button class="btn" data-root="katib">kātib</button>
+        </div>
+        <div class="detail-box teal" id="arabicDetail">
+          <strong>كتب → <em>kataba</em></strong> ("he wrote") — Same 3 consonant letters; fluent readers infer the vowels from the sentence.
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <strong>Sign-count clue:</strong> Even smaller than an alphabet (~22–28 letters). Again, way too small to match Harappa's ~400+ signs.
+      </div>
+    </section>
+
+    <!-- STEP 4: ABUGIDA -->
+    <section class="step" id="step-3">
+      <div class="badge-row">
+        <span class="tag">Step 4 · Glottographic</span>
+        <span class="tag teal">~35–50 base signs</span>
+      </div>
+      <h1>Abugida: Consonants Carry a Default Vowel</h1>
+      <p class="lead">Most South Asian scripts (Devanagari, Tamil, ancient Brahmi) are <strong>abugidas</strong>. Each consonant letter comes with a built-in <em>"a"</em> sound—small marks change or mute that vowel.</p>
+
+      <div class="playground">
+        <div class="pg-label">Click a vowel mark to modify the base consonant क (ka)</div>
+        <div class="abugida-stage">
+          <div class="abugida-glyph" id="abugidaGlyph">क</div>
+          <div>
+            <div style="font-size:1.35rem; font-weight:700;" id="abugidaSound">ka</div>
+            <div style="color:var(--muted); margin-top:0.25rem;" id="abugidaExplain">Base consonant alone — carries the built-in short "a" vowel automatically.</div>
+          </div>
+        </div>
+
+        <div class="btn-group" id="abugidaBtns">
+          <button class="btn selected" data-idx="0">No mark (default a)</button>
+          <button class="btn" data-idx="1">+ ा (long ā)</button>
+          <button class="btn" data-idx="2">+ ि (short i)</button>
+          <button class="btn" data-idx="3">+ ु (short u)</button>
+          <button class="btn" data-idx="4">+ े (e)</button>
+          <button class="btn" data-idx="5">+ ् (mute vowel)</button>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <strong>Historical note:</strong> Later Indian scripts like Brahmi (3rd century BCE) are abugidas, appearing over 1,500 years after Harappa faded. Some Harappan signs do take small stroke modifiers—which makes scholars check whether they act like diacritics or separate signs.
+      </div>
+    </section>
+
+    <!-- STEP 5: SYLLABARY -->
+    <section class="step" id="step-4">
+      <div class="badge-row">
+        <span class="tag">Step 5 · Glottographic</span>
+        <span class="tag teal">~50–120 signs</span>
+      </div>
+      <h1>Syllabary: One Whole Sign Per Syllable</h1>
+      <p class="lead">In a syllabary, <strong>ka</strong>, <strong>ki</strong>, and <strong>ku</strong> don't share a base letter—every syllable gets its own completely unique symbol. That pushes the sign count up to ~60–100.</p>
+
+      <div class="playground">
+        <div class="pg-label">Click the syllable blocks in order to assemble a word</div>
+        <div class="btn-group" id="sylLangSwitch">
+          <button class="btn selected" data-syl="jp">Japanese Hiragana: "fish"</button>
+          <button class="btn" data-syl="lb">Linear B (Ancient Greece): "tripod"</button>
+        </div>
+
+        <div class="word-slot" id="sylBuilt"></div>
+        <div class="tile-row" id="sylPalette"></div>
+        <div class="btn-group" style="margin-bottom:0;">
+          <button class="btn" id="sylReset">Reset word</button>
+          <button class="btn" id="sylSolve">Auto-build</button>
+        </div>
+        <div class="detail-box teal" id="sylStatus" style="margin-top:0.85rem;"></div>
+      </div>
+
+      <div class="takeaway">
+        <strong>Decipherment milestone:</strong> Mycenaean <strong>Linear B</strong> (~87 syllabic signs) was cracked in 1952 <em>without a Rosetta Stone</em> because 87 signs was small enough to map into a grid of consonants × vowels. Harappa has 5× more signs than that.
+      </div>
+    </section>
+
+    <!-- STEP 6: LOGO-SYLLABIC & REBUS -->
+    <section class="step" id="step-5">
+      <div class="badge-row">
+        <span class="tag">Step 6 · Glottographic</span>
+        <span class="tag gold">~400–800 signs</span>
+      </div>
+      <h1>Logo-syllabic Scripts &amp; The Rebus Trick</h1>
+      <p class="lead">How do ancient picture-systems write abstract words like <em>"belief"</em> or a person's name? They combine <strong>whole-word signs (logograms)</strong> with <strong>sound signs</strong> using the <strong>Rebus Principle</strong>: borrow a picture purely for its sound.</p>
+
+      <div class="playground">
+        <div class="pg-label">1 · The Rebus Trick in English</div>
+        <div class="btn-group" id="rebusMode">
+          <button class="btn selected" data-mode="literal">Read as pictures</button>
+          <button class="btn" data-mode="rebus">Read as sounds (Rebus!)</button>
+        </div>
+
+        <div class="rebus-eq">
+          <div class="rebus-box">
+            <span class="sym">🐝</span>
+            <span class="lbl" id="rebusL1">an insect ("bee")</span>
+          </div>
+          <span class="rebus-op">+</span>
+          <div class="rebus-box">
+            <span class="sym">🍃</span>
+            <span class="lbl" id="rebusL2">a plant part ("leaf")</span>
+          </div>
+          <span class="rebus-op">=</span>
+          <div class="rebus-box" style="border-color:var(--accent); background:var(--accent-soft);">
+            <span class="sym" id="rebusResult">❓</span>
+            <span class="lbl" id="rebusOut">just a bee and a leaf</span>
+          </div>
+        </div>
+
+        <div class="pg-label" style="margin-top:1.25rem;">2 · Famous Harappan Rebus Hypothesis (Asko Parpola — <em>contested, not proven</em>)</div>
+        <div class="btn-group" id="fishMode">
+          <button class="btn selected" data-fish="literal">Picture: Fish</button>
+          <button class="btn" data-fish="rebus">Rebus: Star (*mīn)</button>
+          <button class="btn" data-fish="modified">Modified Fish + Roof</button>
+        </div>
+
+        <div class="rebus-eq" style="justify-content:flex-start; gap:1.25rem;">
+          <svg id="fishSvg" width="84" height="84" viewBox="0 0 84 84" aria-label="Stylized Harappan fish sign">
+            <!-- Optional roof stroke (toggled by JS) -->
+            <path id="fishRoof" d="M18 18 L42 6 L66 18" fill="none" stroke="#b4532a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="display:none;"/>
+            <!-- Stylized Harappan diamond fish sign -->
+            <path d="M42 22 C54 34 54 50 42 62 C30 50 30 34 42 22 Z" fill="none" stroke="#1f1c18" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M42 62 L32 74 M42 62 L52 74" fill="none" stroke="#1f1c18" stroke-width="4" stroke-linecap="round"/>
+            <path d="M31 42 L20 38 M53 42 L64 38" fill="none" stroke="#1f1c18" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <div style="flex:1; min-width:220px;" id="fishText">
+            <strong>Literal pictogram:</strong> One of the most common Harappan signs clearly looks like a fish.
+          </div>
+        </div>
+      </div>
+
+      <div class="takeaway">
+        <strong>The big catch with Rebus:</strong> Rebus puns only work if you already know the <em>exact spoken language</em>. A pun in Proto-Dravidian (<em>mīn</em> = fish/star) doesn't work in Sanskrit or Munda. Without a Rosetta Stone, rebus guesses are very easy to overfit.
+      </div>
+    </section>
+
+    <!-- STEP 7: HARAPPAN PUZZLE + SEAL INSPECTOR + QUICK CHECK -->
+    <section class="step" id="step-6">
+      <div class="badge-row">
+        <span class="tag">Step 7 · Bringing It Together</span>
+        <span class="tag gold">~400–676 Indus signs</span>
+      </div>
+      <h1>Where Does the Harappan Script Land?</h1>
+      <p class="lead">Put every writing system on one scale by sign count—then inspect what a real Harappan seal actually looks like.</p>
+
+      <!-- Sign Count Scale -->
+      <div class="playground">
+        <div class="pg-label">1 · Click any script on the sign-count scale</div>
+        <div class="btn-group" id="lensSwitch">
+          <button class="btn selected" data-lens="glotto">Glottographic lens</button>
+          <button class="btn" data-lens="semasio">Skeptic (Semasiographic) lens</button>
+        </div>
+
+        <div class="ruler-wrap">
+          <div class="ruler-track" id="rulerTrack">
+            <button class="ruler-marker" data-sys="abjad" style="left:8%;">Abjad</button>
+            <button class="ruler-marker" data-sys="alphabet" style="left:21%;">Alphabet</button>
+            <button class="ruler-marker" data-sys="abugida" style="left:35%;">Abugida</button>
+            <button class="ruler-marker" data-sys="syllabary" style="left:49%;">Syllabary</button>
+            <button class="ruler-marker indus selected" data-sys="indus" style="left:69%;">Indus (400+)</button>
+            <button class="ruler-marker" data-sys="egyptian" style="left:89%;">Egyptian / Maya</button>
+          </div>
+          <div class="ruler-scale">
+            <span>20 signs</span>
+            <span>50</span>
+            <span>100</span>
+            <span>400</span>
+            <span>800+ signs</span>
+          </div>
+        </div>
+        <div class="detail-box" id="rulerDetail"></div>
+      </div>
+
+      <!-- Clickable Harappan Seal -->
+      <div class="playground">
+        <div class="pg-label">2 · Click the signs on this stylized Harappan seal (reads right → left)</div>
+        <div class="seal-layout">
+          <div class="seal-svg-wrap">
+            <svg width="240" height="240" viewBox="0 0 240 240" aria-label="Interactive Harappan steatite seal">
+              <!-- Steatite square frame -->
+              <rect x="8" y="8" width="224" height="224" rx="10" fill="#efe6d5" stroke="#b9a98e" stroke-width="3"/>
+              <!-- Reading direction arrow -->
+              <text x="120" y="28" text-anchor="middle" font-size="11" font-family="ui-monospace, monospace" fill="#8e3e1d" font-weight="700">← reading direction (R to L)</text>
+
+              <!-- 5 clickable signs across top (left to right visually = end to start of inscription) -->
+              <!-- Sign 1 (leftmost = FINAL sign): Jar sign -->
+              <g class="seal-sign selected" data-sign="jar" transform="translate(20, 38)">
+                <rect class="hit" x="0" y="0" width="38" height="48" rx="6" fill="transparent"/>
+                <path d="M10 12 L14 14 L14 34 C14 40 24 40 24 34 L24 14 L28 12" fill="none" stroke="#1f1c18" stroke-width="3" stroke-linecap="round"/>
+                <path d="M12 10 L16 14 M26 10 L22 14" stroke="#1f1c18" stroke-width="2.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Sign 2: Fish sign -->
+              <g class="seal-sign" data-sign="fish" transform="translate(61, 38)">
+                <rect class="hit" x="0" y="0" width="38" height="48" rx="6" fill="transparent"/>
+                <path d="M19 10 C27 18 27 28 19 36 C11 28 11 18 19 10 Z" fill="none" stroke="#1f1c18" stroke-width="2.8" stroke-linejoin="round"/>
+                <path d="M19 36 L13 43 M19 36 L25 43 M11 23 L6 20 M27 23 L32 20" stroke="#1f1c18" stroke-width="2.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Sign 3: Comb / Harrow -->
+              <g class="seal-sign" data-sign="comb" transform="translate(102, 38)">
+                <rect class="hit" x="0" y="0" width="38" height="48" rx="6" fill="transparent"/>
+                <path d="M19 9 L19 18 M9 18 L29 18 M10 18 L10 38 M16 18 L16 38 M22 18 L22 38 M28 18 L28 38" fill="none" stroke="#1f1c18" stroke-width="2.6" stroke-linecap="round"/>
+              </g>
+
+              <!-- Sign 4: Carrier / Yoke figure -->
+              <g class="seal-sign" data-sign="yoke" transform="translate(143, 38)">
+                <rect class="hit" x="0" y="0" width="38" height="48" rx="6" fill="transparent"/>
+                <circle cx="19" cy="13" r="3.5" fill="#1f1c18"/>
+                <path d="M19 17 L19 30 M19 30 L13 41 M19 30 L25 41 M8 21 L30 21 M9 21 L9 29 M29 21 L29 29" fill="none" stroke="#1f1c18" stroke-width="2.6" stroke-linecap="round"/>
+              </g>
+
+              <!-- Sign 5 (rightmost = INITIAL): Vertical strokes -->
+              <g class="seal-sign" data-sign="strokes" transform="translate(184, 38)">
+                <rect class="hit" x="0" y="0" width="38" height="48" rx="6" fill="transparent"/>
+                <path d="M11 12 L11 36 M19 12 L19 36 M27 12 L27 36" fill="none" stroke="#1f1c18" stroke-width="3" stroke-linecap="round"/>
+              </g>
+
+              <!-- Divider -->
+              <line x1="24" y1="96" x2="216" y2="96" stroke="#c8ba9f" stroke-width="1.5"/>
+
+              <!-- Stylized Indus Unicorn + Ritual Stand (field iconography) -->
+              <g transform="translate(36, 108)" fill="none" stroke="#4a4033" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Ritual stand / brazier on left -->
+                <path d="M18 82 L34 82 M26 82 L26 52 M16 52 L36 52 L33 40 L19 40 Z M20 34 C20 28 32 28 32 34"/>
+                <!-- One-horned bull ("unicorn") facing left -->
+                <path d="M74 36 C68 20 56 12 42 8" stroke-width="3"/> <!-- curved horn -->
+                <path d="M72 36 L60 44 L64 52 L78 48"/> <!-- head & snout -->
+                <path d="M76 38 C90 36 118 36 138 42 C146 45 148 56 144 64 L78 64 C72 58 72 48 76 38 Z" fill="#dfd2bc"/> <!-- torso -->
+                <path d="M84 64 L82 92 M96 64 L96 90 M128 64 L126 92 M140 64 L142 90"/> <!-- legs -->
+                <path d="M145 48 C154 54 156 68 152 78"/> <!-- tail -->
+              </g>
+              <text x="120" y="218" text-anchor="middle" font-size="11" fill="#625a50">Field symbol: "Unicorn" (~60% of seals)</text>
+            </svg>
+          </div>
+
+          <div>
+            <div class="detail-box" id="sealDetail" style="margin-bottom:0.85rem;"></div>
+            <div class="panel" style="padding:0.95rem 1.1rem;">
+              <strong style="font-size:0.9rem;">Two hard realities of the Harappan corpus:</strong>
+              <ul style="margin:0.45rem 0 0; padding-left:1.2rem; font-size:0.9rem; color:var(--muted);">
+                <li>Average inscription is only <strong>4–5 signs long</strong> (longest is ~17–26 signs).</li>
+                <li>We have <strong>~4,000–5,000 objects</strong>, but <strong>zero bilingual texts</strong> (no Rosetta Stone).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Check -->
+      <div class="playground" style="margin-bottom:0;">
+        <div class="pg-label">3 · Quick intuition check (3 mini-questions)</div>
+        <div id="quizContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <button class="nav-btn" id="prevBtn" disabled>← Back</button>
+    <span class="kbd-hint">Tip: Use ← and → arrow keys</span>
+    <button class="nav-btn primary" id="nextBtn">Next →</button>
+  </footer>
+
+  <script>
+    // ---------- Step Navigation ----------
+    const steps = Array.from(document.querySelectorAll('.step'));
+    const pills = Array.from(document.querySelectorAll('.pill'));
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const stepCounter = document.getElementById('stepCounter');
+    const progressFill = document.getElementById('progressFill');
+    let currentStep = 0;
+
+    function goToStep(idx) {
+      currentStep = Math.max(0, Math.min(steps.length - 1, idx));
+      steps.forEach((s, i) => s.classList.toggle('active', i === currentStep));
+      pills.forEach((p, i) => p.classList.toggle('active', i === currentStep));
+      stepCounter.textContent = `Step ${currentStep + 1} of ${steps.length}`;
+      progressFill.style.width = `${((currentStep + 1) / steps.length) * 100}%`;
+      prevBtn.disabled = currentStep === 0;
+      nextBtn.textContent = currentStep === steps.length - 1 ? 'Done ✓' : 'Next →';
+      nextBtn.disabled = currentStep === steps.length - 1;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    pills.forEach(p => p.addEventListener('click', () => goToStep(Number(p.dataset.step))));
+    prevBtn.addEventListener('click', () => goToStep(currentStep - 1));
+    nextBtn.addEventListener('click', () => goToStep(currentStep + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' && currentStep < steps.length - 1) goToStep(currentStep + 1);
+      if (e.key === 'ArrowLeft' && currentStep > 0) goToStep(currentStep - 1);
+    });
+
+    // ---------- Step 1: Big Split ----------
+    const langData = {
+      en: {
+        text: 'DO NOT ENTER',
+        glotto: 'Tied to English words. Change the language and the marks must completely change.',
+        semasio: 'Never changes. An English speaker understands it without reading any English words.'
+      },
+      hi: {
+        text: 'प्रवेश निषेध',
+        glotto: 'Completely different script and spoken words (praveś niṣedh) to express the same warning in Hindi.',
+        semasio: 'Still identical! No Devanagari needed—meaning is conveyed directly.'
+      },
+      ja: {
+        text: '進入禁止',
+        glotto: 'Completely different signs and spoken words (shinnyū kinshi) in Japanese.',
+        semasio: 'Still identical! This is why semasiographic symbols cross language borders effortlessly.'
+      }
+    };
+
+    document.querySelectorAll('#langSwitch .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#langSwitch .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const d = langData[btn.dataset.lang];
+        document.getElementById('glottoDisplay').textContent = d.text;
+        document.getElementById('glottoCaption').textContent = d.glotto;
+        document.getElementById('semasioCaption').textContent = d.semasio;
+      });
+    });
+
+    // ---------- Step 2: Alphabet ----------
+    const alphaWords = {
+      en: [
+        { g: 'F', role: 'Consonant', isVowel: false, info: '<strong>F</strong> encodes the single consonant sound <code>/f/</code>.' },
+        { g: 'I', role: 'Vowel', isVowel: true, info: '<strong>I</strong> encodes the vowel sound <code>/ɪ/</code>—given its own full letter, equal in status to consonants.' },
+        { g: 'S', role: 'Consonant', isVowel: false, info: '<strong>S</strong> (paired with H here) helps encode the consonant sound <code>/ʃ/</code>.' },
+        { g: 'H', role: 'Consonant', isVowel: false, info: '<strong>H</strong> combines with S in English spelling to mark <code>/ʃ/</code>.' }
+      ],
+      gr: [
+        { g: 'Ι', role: 'Vowel', isVowel: true, info: '<strong>Iota (Ι)</strong> — vowel <code>/i/</code>. The Greeks adapted the Phoenician script and famously added dedicated vowel letters.' },
+        { g: 'Χ', role: 'Consonant', isVowel: false, info: '<strong>Chi (Χ)</strong> — consonant <code>/kʰ/</code>.' },
+        { g: 'Θ', role: 'Consonant', isVowel: false, info: '<strong>Theta (Θ)</strong> — consonant <code>/tʰ/</code>.' },
+        { g: 'Υ', role: 'Vowel', isVowel: true, info: '<strong>Upsilon (Υ)</strong> — vowel <code>/y/</code> (later <code>/i/</code>).' },
+        { g: 'Σ', role: 'Consonant', isVowel: false, info: '<strong>Sigma (Σ)</strong> — consonant <code>/s/</code>. Together: <em>ichthys</em> ("fish").' }
+      ]
+    };
+
+    function renderAlphabet(wordKey) {
+      const container = document.getElementById('alphaTiles');
+      const detail = document.getElementById('alphaDetail');
+      const items = alphaWords[wordKey];
+      container.innerHTML = '';
+      items.forEach((item, idx) => {
+        const el = document.createElement('button');
+        el.className = `tile ${item.isVowel ? 'vowel' : ''} ${idx === 0 ? 'selected' : ''}`;
+        el.innerHTML = `<span class="glyph">${item.g}</span><span class="role">${item.role}</span>`;
+        el.addEventListener('click', () => {
+          container.querySelectorAll('.tile').forEach(t => t.classList.remove('selected'));
+          el.classList.add('selected');
+          detail.innerHTML = item.info;
+          detail.className = `detail-box ${item.isVowel ? 'teal' : ''}`;
+        });
+        container.appendChild(el);
+      });
+      detail.innerHTML = items[0].info;
+      detail.className = `detail-box ${items[0].isVowel ? 'teal' : ''}`;
+    }
+
+    document.querySelectorAll('#alphaWordSwitch .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#alphaWordSwitch .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        renderAlphabet(btn.dataset.word);
+      });
+    });
+    renderAlphabet('en');
+
+    // ---------- Step 3: Abjad ----------
+    let vowelsStripped = false;
+    const abjadSentence = document.getElementById('abjadSentence');
+    const vowelToggleBtn = document.getElementById('vowelToggleBtn');
+    vowelToggleBtn.addEventListener('click', () => {
+      vowelsStripped = !vowelsStripped;
+      abjadSentence.textContent = vowelsStripped
+        ? 'TH KNG SW TH FSH N TH RVR'
+        : 'THE KING SAW THE FISH IN THE RIVER';
+      vowelToggleBtn.textContent = vowelsStripped ? 'Restore the vowels' : 'Strip the vowels';
+    });
+
+    const arabicData = {
+      kataba: '<strong>كتب → <em>kataba</em></strong> ("he wrote") — Same 3 consonant letters; fluent readers infer the vowels from the sentence.',
+      kutub: '<strong>كتب → <em>kutub</em></strong> ("books") — Identical consonant skeleton <code>k-t-b</code>, completely different vowels and meaning!',
+      katib: '<strong>كاتب → <em>kātib</em></strong> ("writer") — Adds one long vowel letter (<em>alif</em>), while short vowels stay unwritten.'
+    };
+    document.querySelectorAll('#arabicRoots .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#arabicRoots .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('arabicDetail').innerHTML = arabicData[btn.dataset.root];
+      });
+    });
+
+    // ---------- Step 4: Abugida ----------
+    const abugidaStates = [
+      { g: 'क', s: 'ka', e: 'Base consonant alone — carries the built-in short "a" vowel automatically.' },
+      { g: 'का', s: 'kā', e: 'Vertical bar (ा) swaps the default vowel for a long "ā" (as in "father").' },
+      { g: 'कि', s: 'ki', e: 'Hook on the left (ि) changes the vowel to short "i".' },
+      { g: 'कु', s: 'ku', e: 'Loop underneath (ु) changes the vowel to short "u".' },
+      { g: 'के', s: 'ke', e: 'Stroke on top (े) changes the vowel to "e".' },
+      { g: 'क्', s: 'k (bare)', e: 'The virama/halant mark (्) strips the built-in vowel completely, leaving a pure consonant.' }
+    ];
+    document.querySelectorAll('#abugidaBtns .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#abugidaBtns .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const st = abugidaStates[Number(btn.dataset.idx)];
+        document.getElementById('abugidaGlyph').textContent = st.g;
+        document.getElementById('abugidaSound').textContent = st.s;
+        document.getElementById('abugidaExplain').textContent = st.e;
+      });
+    });
+
+    // ---------- Step 5: Syllabary ----------
+    const sylConfigs = {
+      jp: {
+        target: ['sa', 'ka', 'na'],
+        meaning: '<strong>さかな (<em>sakana</em>) = "fish"</strong> in Japanese! Notice how <code>ka</code> (か) looks nothing like <code>ki</code> (き) or <code>ku</code> (く)—every syllable is its own sign.',
+        palette: [
+          { g: 'か', s: 'ka' },
+          { g: 'な', s: 'na' },
+          { g: 'さ', s: 'sa' },
+          { g: 'き', s: 'ki' }
+        ]
+      },
+      lb: {
+        target: ['ti', 'ri', 'po'],
+        meaning: '<strong>𐀴𐀪𐀡 (<em>ti-ri-po</em>) = <em>tripos</em> ("tripod")</strong> in Mycenaean Greek! This exact word on a Pylos tablet helped prove Michael Ventris\'s 1952 decipherment of Linear B.',
+        palette: [
+          { g: '𐀪', s: 'ri' },
+          { g: '𐀴', s: 'ti' },
+          { g: '𐀡', s: 'po' },
+          { g: '𐀀', s: 'a' }
+        ]
+      }
+    };
+    let currentSyl = 'jp';
+    let builtSyls = [];
+
+    function renderSyllabary() {
+      const cfg = sylConfigs[currentSyl];
+      const builtEl = document.getElementById('sylBuilt');
+      const palEl = document.getElementById('sylPalette');
+      const statusEl = document.getElementById('sylStatus');
+
+      builtEl.innerHTML = builtSyls.length === 0
+        ? `<span style="color:var(--muted); font-size:0.9rem;">Click syllables below to spell: <strong>${cfg.target.join(' - ')}</strong></span>`
+        : builtSyls.map(x => `<span class="chip">${x.g} <small>${x.s}</small></span>`).join('');
+
+      palEl.innerHTML = '';
+      cfg.palette.forEach(item => {
+        const b = document.createElement('button');
+        b.className = 'tile';
+        b.innerHTML = `<span class="glyph">${item.g}</span><span class="role">${item.s}</span>`;
+        b.addEventListener('click', () => {
+          if (builtSyls.length < cfg.target.length) {
+            builtSyls.push(item);
+            renderSyllabary();
+          }
+        });
+        palEl.appendChild(b);
+      });
+
+      const seq = builtSyls.map(x => x.s);
+      if (seq.join('-') === cfg.target.join('-')) {
+        statusEl.innerHTML = '✓ ' + cfg.meaning;
+        statusEl.className = 'detail-box teal';
+      } else if (builtSyls.length === cfg.target.length) {
+        statusEl.innerHTML = `You spelled <strong>${seq.join('-')}</strong>. Hit Reset and try <strong>${cfg.target.join('-')}</strong>!`;
+        statusEl.className = 'detail-box';
+      } else {
+        statusEl.innerHTML = `Target sequence: <strong>${cfg.target.join(' + ')}</strong>. Click each syllable tile above.`;
+        statusEl.className = 'detail-box teal';
+      }
+    }
+
+    document.querySelectorAll('#sylLangSwitch .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#sylLangSwitch .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        currentSyl = btn.dataset.syl;
+        builtSyls = [];
+        renderSyllabary();
+      });
+    });
+    document.getElementById('sylReset').addEventListener('click', () => { builtSyls = []; renderSyllabary(); });
+    document.getElementById('sylSolve').addEventListener('click', () => {
+      const cfg = sylConfigs[currentSyl];
+      builtSyls = cfg.target.map(s => cfg.palette.find(p => p.s === s));
+      renderSyllabary();
+    });
+    renderSyllabary();
+
+    // ---------- Step 6: Rebus & Fish ----------
+    document.querySelectorAll('#rebusMode .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#rebusMode .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (btn.dataset.mode === 'rebus') {
+          document.getElementById('rebusL1').textContent = 'sound: /biː/';
+          document.getElementById('rebusL2').textContent = 'sound: /liːf/';
+          document.getElementById('rebusResult').textContent = '"BELIEF"';
+          document.getElementById('rebusOut').textContent = 'meaning dropped, sound kept!';
+        } else {
+          document.getElementById('rebusL1').textContent = 'an insect ("bee")';
+          document.getElementById('rebusL2').textContent = 'a plant part ("leaf")';
+          document.getElementById('rebusResult').textContent = '❓';
+          document.getElementById('rebusOut').textContent = 'just a bee and a leaf';
+        }
+      });
+    });
+
+    const fishStates = {
+      literal: {
+        roof: false,
+        text: '<strong>Literal pictogram:</strong> One of the most common Harappan signs clearly looks like a fish.'
+      },
+      rebus: {
+        roof: false,
+        text: '<strong>Rebus hypothesis (Dravidian):</strong> In Proto-Dravidian, <code>*mīn</code> means both <em>"fish"</em> and <em>"star / shining"</em>. Parpola proposes the fish sign stood for stars or deities.'
+      },
+      modified: {
+        roof: true,
+        text: '<strong>Modified fish (roof stroke):</strong> Adding a roof/over-mark might mean <em>"upper/black star"</em> (e.g., Saturn in Parpola\'s theory). Clever—but because we have no bilingual check, critics point out you can\'t falsify it yet.'
+      }
+    };
+    document.querySelectorAll('#fishMode .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#fishMode .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const st = fishStates[btn.dataset.fish];
+        document.getElementById('fishRoof').style.display = st.roof ? 'block' : 'none';
+        document.getElementById('fishText').innerHTML = st.text;
+      });
+    });
+
+    // ---------- Step 7: Ruler + Seal + Quick Check ----------
+    let currentLens = 'glotto';
+    let currentSys = 'indus';
+    const sysInfo = {
+      abjad: {
+        glotto: '<strong>Abjad (~20–30 signs):</strong> Consonants only (Phoenician, Arabic). Far too small to match Indus.',
+        semasio: '<strong>Abjad (~20–30 signs):</strong> Purely phonetic consonant scripts—nothing like Indus sign counts.'
+      },
+      alphabet: {
+        glotto: '<strong>Alphabet (~20–40 signs):</strong> Separate signs for consonants and vowels (Greek, Latin). Too small for Indus.',
+        semasio: '<strong>Alphabet (~20–40 signs):</strong> Compact phonetic scripts.'
+      },
+      abugida: {
+        glotto: '<strong>Abugida (~35–50 base signs):</strong> Consonant + default vowel + diacritics (Devanagari, Brahmi). Much smaller than Indus\'s base inventory.',
+        semasio: '<strong>Abugida (~35–50 base signs):</strong> Later Indian scripts (Brahmi) are abugidas—no proven bridge from Indus.'
+      },
+      syllabary: {
+        glotto: '<strong>Syllabary (~50–120 signs):</strong> One sign per syllable (Linear B, Hiragana). Still ~4–5× smaller than Indus.',
+        semasio: '<strong>Syllabary (~50–120 signs):</strong> Linear B sits here—and had far longer administrative texts than Indus.'
+      },
+      indus: {
+        glotto: '<strong>Indus Script (~400–676 signs):</strong> Lands squarely in the <strong>logo-syllabic zone</strong>! Scholars disagree on the exact count (Mahadevan ~417, Wells ~676) because it\'s hard to tell separate signs from stylistic variants (allographs).',
+        semasio: '<strong>Indus Script (~400–676 signs) — Skeptic view:</strong> Wait! Non-linguistic emblem systems (like medieval heraldry, clan/deity totems, or potter\'s marks) can <em>also</em> have 400+ distinct symbols—and they explain why inscriptions stay tiny (4–5 signs) with almost no sign repetition.'
+      },
+      egyptian: {
+        glotto: '<strong>Egyptian (~700+) &amp; Mayan (~800+):</strong> Classic logo-syllabic scripts. Both were deciphered—Egyptian via the Rosetta Stone bilingual, Mayan via living descendant languages and long monumental texts.',
+        semasio: '<strong>Egyptian &amp; Mayan contrast:</strong> Unlike Indus, both left <em>thousands of long multi-sentence texts</em> on walls, papyrus, and stone—clear footprints of full spoken language.'
+      }
+    };
+
+    function updateRuler() {
+      document.getElementById('rulerDetail').innerHTML = sysInfo[currentSys][currentLens];
+    }
+    document.querySelectorAll('#rulerTrack .ruler-marker').forEach(m => {
+      m.addEventListener('click', () => {
+        document.querySelectorAll('#rulerTrack .ruler-marker').forEach(x => x.classList.remove('selected'));
+        m.classList.add('selected');
+        currentSys = m.dataset.sys;
+        updateRuler();
+      });
+    });
+    document.querySelectorAll('#lensSwitch .btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#lensSwitch .btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        currentLens = btn.dataset.lens;
+        updateRuler();
+      });
+    });
+    updateRuler();
+
+    // Seal sign inspector
+    const sealFacts = {
+      jar: '<strong>"Jar" sign (Final / Leftmost):</strong> The single most famous structural fact in Indus studies. This sign appears at the <em>end</em> of roughly 10% of all known inscriptions—possibly a grammatical suffix (like "-of" / possessive) or an administrative closing marker.',
+      fish: '<strong>"Fish" sign (Medial):</strong> Frequently takes small extra strokes (roofs, ticks, lines inside). Appears inside clusters, often preceded by vertical strokes.',
+      comb: '<strong>"Comb / Harrow" sign:</strong> Often pairs tightly with specific neighboring signs—one of many rigid positional patterns computers can detect even without knowing the language.',
+      yoke: '<strong>"Carrier / Yoke" figure:</strong> Clearly pictorial (a human figure carrying two hanging loads on a pole). Often appears near the end or paired with the jar sign.',
+      strokes: '<strong>Vertical strokes (Initial / Rightmost):</strong> Groups of short strokes (1 to 12) frequently open inscriptions or precede fish signs—possibly numerals, or possibly phonetic/symbolic counts.'
+    };
+    function selectSealSign(key) {
+      document.querySelectorAll('.seal-sign').forEach(g => g.classList.toggle('selected', g.dataset.sign === key));
+      document.getElementById('sealDetail').innerHTML = sealFacts[key];
+    }
+    document.querySelectorAll('.seal-sign').forEach(g => {
+      g.addEventListener('click', () => selectSealSign(g.dataset.sign));
+    });
+    selectSealSign('jar');
+
+    // Quick 3-question check
+    const quizItems = [
+      {
+        q: '1. You excavate a lost script with 27 distinct signs and long stone inscriptions. What is it most likely to be?',
+        opts: ['Alphabet or Abjad', 'Logo-syllabic', 'Semasiographic'],
+        ans: 0,
+        explain: '27 signs is right in the Alphabet / Abjad sweet spot (~20–40 signs).'
+      },
+      {
+        q: '2. A system of 500 symbols appears only in 3-symbol tags on wine jars, never in long paragraphs. Why do skeptics question calling it a spoken script?',
+        opts: [
+          'Spoken scripts cannot have 500 signs',
+          'Short tags + high sign count could just be emblems/labels (semasiographic)',
+          'Wine jars cannot hold writing'
+        ],
+        ans: 1,
+        explain: 'Logo-syllabic scripts DO have ~500 signs—so sign count alone doesn\'t separate a spoken script from a large emblem/badge system.'
+      },
+      {
+        q: '3. Why is the Rebus trick dangerous to rely on when deciphering Harappan?',
+        opts: [
+          'Ancient people never used puns',
+          'Rebus puns depend on knowing the exact underlying spoken language, which we don\'t know for sure',
+          'Fish signs cannot be drawn on stone'
+        ],
+        ans: 1,
+        explain: 'Without knowing the underlying language (or having a bilingual), you can invent plausible-sounding puns in almost any language family.'
+      }
+    ];
+
+    const quizContainer = document.getElementById('quizContainer');
+    quizItems.forEach((item, qi) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-item';
+      card.innerHTML = `<p class="quiz-q">${item.q}</p><div class="quiz-opts"></div><div class="quiz-feedback" id="qf-${qi}"></div>`;
+      const optsWrap = card.querySelector('.quiz-opts');
+      item.opts.forEach((opt, oi) => {
+        const b = document.createElement('button');
+        b.className = 'quiz-btn';
+        b.textContent = opt;
+        b.addEventListener('click', () => {
+          optsWrap.querySelectorAll('.quiz-btn').forEach(x => x.classList.remove('correct', 'wrong'));
+          const fb = document.getElementById(`qf-${qi}`);
+          if (oi === item.ans) {
+            b.classList.add('correct');
+            fb.textContent = '✓ Spot on! ' + item.explain;
+          } else {
+            b.classList.add('wrong');
+            fb.textContent = 'Not quite — try another option.';
+          }
+        });
+        optsWrap.appendChild(b);
+      });
+      quizContainer.appendChild(card);
+    });
+  </script>
+</body>
+</html>

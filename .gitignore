@@ -26,10 +26,12 @@ playwright-report/
 # Env variables
 .env
 
-# Agents: keep local files ignored, except the shared skills
+# Agents: keep local files ignored, except the shared skills and committed research notes
 .agents/
 !/.agents/
 /.agents/*
+!/.agents/notes/
+!/.agents/notes/**
 !/.agents/skills/
 /.agents/skills/*
 !/.agents/skills/branch/

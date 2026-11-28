@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23b4532a'/><path d='M16 6 C21 12 21 18 16 24 C11 18 11 12 16 6 Z' fill='none' stroke='%23faf6ef' stroke-width='2.4'/><path d='M16 24 L12 28 M16 24 L20 28' stroke='%23faf6ef' stroke-width='2.4' stroke-linecap='round'/></svg>">
+  <title>Harappan Script — Visual Research Notes</title>
+  <style>
+    :root {
+      --bg: #faf6ef;
+      --card: #fffdf9;
+      --ink: #1f1c18;
+      --muted: #645c52;
+      --accent: #b4532a;
+      --accent-soft: #f5e6dc;
+      --border: #e5ddd0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.2rem;
+      margin: 0 0 0.75rem;
+      line-height: 1.2;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin: 0 0 2.5rem;
+      font-size: 1.05rem;
+    }
+    .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1rem;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(31, 28, 24, 0.06);
+    }
+    .card-num {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.65rem;
+    }
+    .card h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      margin: 0 0 0.4rem;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+    .upcoming {
+      opacity: 0.65;
+      border-style: dashed;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Harappan Script Research</div>
+    <h1>Visual Walkthroughs</h1>
+    <p class="subtitle">Local interactive guides to build intuition before diving into the Indus corpus and decipherment papers.</p>
+
+    <a class="card" href="01-writing-systems.html">
+      <span class="card-num">01</span>
+      <h2>How Writing Systems Work (and Where Harappa Fits)</h2>
+      <p>Walk step-by-step through the Big Split, alphabets, abjads, abugidas, syllabaries, logo-syllabic scripts, the rebus trick, and a clickable Harappan seal.</p>
+    </a>
+
+    <div class="card upcoming">
+      <span class="card-num">02 · Coming next</span>
+      <h2>Can We Even Translate It? (The Decipherability Gate)</h2>
+      <p>Comparing solved scripts like Linear B against the Indus Valley debate.</p>
+    </div>
+  </main>
+</body>
+</html>
